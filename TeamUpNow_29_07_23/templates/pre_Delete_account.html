@@ -1,0 +1,14 @@
+
+
+{% if user.is_authenticated %}
+<div style="padding-top: 12%;">
+  <center>
+  Do you want to leave your Team?
+  <p>
+  <a href="{% url 'Delete_account'  %}" >
+    Yes, delete My Account
+  </a>
+</p>
+</center>
+</div>
+{% endif %}

@@ -1,0 +1,394 @@
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse, HttpResponseRedirect
+from django.template import loader
+
+from post_StartUp.models import  Tag_StartUp, Instructed_StartUp, Illustrated_StartUp, Post_StartUp
+from post.models import Stream, Post, Tag,  Instructed, Illustrated, PostFileContent
+from post_StartUp.forms import NewPostForm_StartUp
+from post.forms import NewPostForm
+
+from stories.models import Story, StoryStream
+from notifications.models import Notification, Notification_StartUp
+
+from comment.models import Comment, Comment_StartUp
+from comment.forms import CommentForm, CommentForm_StartUp
+
+
+from django.contrib.auth.decorators import login_required
+
+from django.urls import reverse
+from authy.models import Profile
+from authy.utils import *
+
+
+# Create your views here.
+@login_required
+def index(request):
+	user = request.user
+	posts = Stream.objects.filter(user=user)
+
+	stories = StoryStream.objects.filter(user=user)
+
+
+	group_ids = []
+
+	for post in posts:
+		group_ids.append(post.post_id)
+
+
+	#technical stream
+	user_SELF =request.user.id
+	
+	posts_self  = Post.objects.filter(user=user_SELF).order_by('-posted') 
+	post_tags = Post.objects.filter(id__in=group_ids).all().order_by('-posted')[:5]	
+	post_tags_all = Post.objects.all().order_by('-posted')[:5]
+	post_mentors = Post.objects.filter(id__in=group_ids).all().order_by('-posted')[:5]	
+	post_mentors_all = Post.objects.all().order_by('-posted')[:5] 
+
+	#starUp stream
+	posts_self_StartUp  = Post_StartUp.objects.filter(user=user_SELF).order_by('-posted') 
+	post_tags_StartUp = Post_StartUp.objects.filter(id__in=group_ids).all().order_by('-posted')[:5]	
+	post_tags_all_StartUp = Post_StartUp.objects.all().order_by('-posted')[:5]
+	post_mentors_StartUp = Post_StartUp.objects.filter(id__in=group_ids).all().order_by('-posted')[:5]	
+	post_mentors_all_StartUp = Post_StartUp.objects.all().order_by('-posted')[:5] 
+
+	#notifications
+	notifications = Notification.objects.filter(user=request.user).order_by('-date')[:3]
+	notifications_all = Notification.objects.all().order_by('-date')[:3]
+	Notification.objects.filter(user=request.user, is_seen=False).update(is_seen=True)
+
+	#notifications startUp
+	notifications_startUp = Notification_StartUp.objects.filter(user=request.user).order_by('-date')[:3]
+	notifications_startUp_all = Notification_StartUp.objects.all().order_by('-date')[:3]
+	Notification_StartUp.objects.filter(user=request.user, is_seen=False).update(is_seen=True)
+
+
+	template = loader.get_template('index.html')
+
+	context = {
+		'posts_self':posts_self,
+		'post_tags':post_tags,
+		'post_tags_all':post_tags_all,
+		'post_mentors': post_mentors,
+		'post_mentors_all':post_mentors_all,
+		
+		'posts_self_StartUp':posts_self_StartUp,
+		'post_tags_StartUp':post_tags_StartUp,
+		'post_tags_all_StartUp':post_tags_all_StartUp,
+		'post_mentors_StartUp': post_mentors_StartUp,
+		'post_mentors_all_StartUp':post_mentors_all_StartUp,
+		
+	
+		'stories': stories,
+		'notifications': notifications,
+		'notifications_all':notifications_all,
+		'notifications_startUp':notifications_startUp,
+		'notifications_startUp_all':notifications_startUp_all,
+
+	}
+
+	return HttpResponse(template.render(context, request))
+
+
+def PostDetails(request, post_id):
+	post = get_object_or_404(Post, id=post_id)
+	user = request.user
+	profile = Profile.objects.get(user=user)
+	favorited = False
+
+	#comment
+	comments = Comment.objects.filter(post=post).order_by('date')
+	
+	if request.user.is_authenticated:
+		profile = Profile.objects.get(user=user) 
+
+		if profile.favorites.filter(id=post_id).exists():
+			favorited = True
+
+	#Comments Form
+	if request.method == 'POST':
+		form = CommentForm(request.POST)
+		if form.is_valid():
+			comment = form.save(commit=False)
+			comment.post = post
+			comment.user = user
+			comment.save()
+			return HttpResponseRedirect(reverse('postdetails', args=[post_id]))
+	else:
+		form = CommentForm()
+
+
+	#notifications
+	notifications = Notification.objects.filter(user=request.user).order_by('-date')[:3]
+	notifications_all = Notification.objects.all().order_by('-date')[:3]
+	Notification.objects.filter(user=request.user, is_seen=False).update(is_seen=True)
+
+	#notifications startUp
+	notifications_startUp = Notification_StartUp.objects.filter(user=request.user).order_by('-date')[:3]
+	notifications_startUp_all = Notification_StartUp.objects.all().order_by('-date')[:3]
+	Notification_StartUp.objects.filter(user=request.user, is_seen=False).update(is_seen=True)
+	
+	user_SELF =request.user.id
+	posts_self  = Post.objects.filter(user=user_SELF).order_by('-posted')
+
+
+	illustrated = post.illustrated
+	instructed = post.instructed
+	sumScore=illustrated+instructed
+
+
+	posts_value_unique_=[illustrated, instructed]
+	posts_names_unique_=['illustrated','instructed']
+ 
+	contentQuality_score=get_pie_profileDashboard_projects(posts_value_unique_, posts_names_unique_)
+
+
+	template = loader.get_template('post_detail.html')
+
+	context = {
+		'post':post,
+		'posts_self':posts_self,
+		'favorited':favorited,
+		'profile':profile,
+		'form':form,
+		'comments':comments,
+		
+		'notifications': notifications,
+		'notifications_all':notifications_all,
+		'notifications_startUp':notifications_startUp,
+		'notifications_startUp_all':notifications_startUp_all,
+
+		'illustrated':illustrated,
+		'instructed':instructed,
+		'sumScore':sumScore,
+		'contentQuality_score':contentQuality_score,
+		
+	}
+
+	return HttpResponse(template.render(context, request))
+ 
+@login_required
+def NewPost(request):
+	user = request.user
+	tags_objs = []
+	files_objs = []
+
+	if request.method == 'POST':
+		form = NewPostForm(request.POST, request.FILES)
+		if form.is_valid():
+			files = request.FILES.getlist('content')
+			lessonLink = form.cleaned_data.get('lessonLink')
+			codeSourceOfTheProject=form.cleaned_data.get('codeSourceOfTheProject')
+			classCategory = form.cleaned_data.get('classCategory')
+			caption = form.cleaned_data.get('caption')
+			tags_form = form.cleaned_data.get('tags')
+			authorOfTheVideo = form.cleaned_data.get('authorOfTheVideo')
+
+			tags_list = list(tags_form.split(', '))
+
+			for tag in tags_list:
+				t, created = Tag.objects.get_or_create(title=tag)
+				tags_objs.append(t)
+
+			for file in files:
+				file_instance = PostFileContent(file=file, user=user)
+				file_instance.save()
+				files_objs.append(file_instance)
+
+			p, created = Post.objects.get_or_create(caption=caption, lessonLink=lessonLink, codeSourceOfTheProject=codeSourceOfTheProject, classCategory=classCategory, authorOfTheVideo=authorOfTheVideo, user=user)
+			p.tags.set(tags_objs)
+			p.content.set(files_objs)
+			p.save()
+			return redirect('index')
+	else:
+		form = NewPostForm()
+
+	#notifications
+	notifications = Notification.objects.filter(user=request.user).order_by('-date')
+	notifications_all = Notification.objects.all().order_by('-date')[:10]
+	Notification.objects.filter(user=request.user, is_seen=False).update(is_seen=True)
+
+	user_SELF =request.user.id
+	posts_self  = Post.objects.filter(user=user_SELF).order_by('-posted')
+
+	context = {
+		'form':form,
+		'notifications': notifications,
+		'posts_self':posts_self,
+		'notifications_all':notifications_all,
+	}
+
+	return render(request, 'newpost.html', context)
+ 
+
+def tags(request, tag_slug):
+	tag = get_object_or_404(Tag, slug=tag_slug)
+	posts = Post.objects.filter(tags=tag).order_by('-posted')
+
+	template = loader.get_template('tag.html')
+
+	
+	user_SELF =request.user.id
+	posts_self  = Post.objects.filter(user=user_SELF).order_by('-posted')
+
+	#notifications
+	notifications = Notification.objects.filter(user=request.user).order_by('-date')
+	notifications_all = Notification.objects.all().order_by('-date')[:10]
+	Notification.objects.filter(user=request.user, is_seen=False).update(is_seen=True)
+
+	context = {
+		'posts':posts,
+		'posts_self':posts_self,
+		'tag':tag,
+		'notifications': notifications,
+		'notifications_all':notifications_all,
+	}
+
+	return HttpResponse(template.render(context, request))
+ 
+
+@login_required
+def instructed(request, post_id):
+	user = request.user
+	post = Post.objects.get(id=post_id)
+	current_likes = post.instructed
+	liked = Instructed.objects.filter(user=user, post=post).count()
+
+	if not liked:
+		like = Instructed.objects.create(user=user, post=post)
+		#like.save()
+		current_likes = current_likes + 1
+
+	else:
+		Instructed.objects.filter(user=user, post=post).delete()
+		current_likes = current_likes - 1
+
+	post.instructed = current_likes
+	post.save()
+
+	return HttpResponseRedirect(reverse('postdetails', args=[post_id]))
+
+
+
+@login_required
+def illustrated(request, post_id):
+	user = request.user
+	post = Post.objects.get(id=post_id)
+	current_likes = post.illustrated
+	liked = Illustrated.objects.filter(user=user, post=post).count()
+
+	if not liked:
+		like = Illustrated.objects.create(user=user, post=post)
+		#like.save()
+		current_likes = current_likes + 1
+
+	else:
+		Illustrated.objects.filter(user=user, post=post).delete()
+		current_likes = current_likes - 1
+
+	post.illustrated = current_likes
+	post.save()
+
+	return HttpResponseRedirect(reverse('postdetails', args=[post_id]))
+	
+
+@login_required
+def favorite(request, post_id):
+	user = request.user
+	post = Post.objects.get(id=post_id)
+	profile = Profile.objects.get(user=user)
+
+	if profile.favorites.filter(id=post_id).exists():
+		profile.favorites.remove(post)
+
+	else:
+		profile.favorites.add(post)
+
+	return HttpResponseRedirect(reverse('postdetails', args=[post_id]))
+
+
+ 
+########################################################################################################################################################################################## DELETE POST
+@login_required
+def DeletePost(request, event_id):
+	post = Post.objects.get(pk=event_id)
+	if request.user == post.user:
+		post.delete()
+		return redirect('index')		
+	else:
+		return redirect('index')		
+
+
+@login_required
+def pre_DeletePost(request, event_id):
+	post = Post.objects.get(pk=event_id)
+	if request.user == post.user:
+		# post.delete()
+		context={'post':post}
+		return render(request, 'pre_DeletePost_DS.html', context)		
+	else:
+		return redirect('index')		
+
+ 
+########################################################################################################################################################################################## EDIT POST
+
+ 
+@login_required
+def EditPost(request, event_id):
+	user = request.user.id
+	post_object = Post.objects.get(pk=event_id)
+	
+	post=Post.objects.all()
+	
+	user = request.user
+	tags_objs = []
+	files_objs = []
+	
+	if request.method == 'POST':
+		form = NewPostForm(request.POST, request.FILES)
+		# form = NewPostForm(request.POST or None, instance=post_object)
+		
+		if form.is_valid():
+			files = request.FILES.getlist('content')
+			post_object.lessonLink = form.cleaned_data.get('lessonLink')
+			post_object.classCategory = form.cleaned_data.get('classCategory')
+			post_object.caption = form.cleaned_data.get('caption')
+			tags_form = form.cleaned_data.get('tags')
+
+			tags_list = list(tags_form.split(','))
+
+			for tag in tags_list:
+				t, created = Tag.objects.get_or_create(title=tag)
+				tags_objs.append(t)
+
+			for file in files:
+				file_instance = PostFileContent(file=file, user=user)
+				file_instance.save()
+				files_objs.append(file_instance)
+
+			p, created = Post.objects.get_or_create(caption=post_object.caption, 
+													lessonLink=post_object.lessonLink,
+													classCategory=post_object.classCategory, 
+													user=user)
+			p.tags.set(tags_objs)
+			p.content.set(files_objs)
+			p.save()
+			return redirect('index')
+	else:
+		form = NewPostForm()
+
+	#notifications
+	notifications = Notification.objects.filter(user=request.user).order_by('-date')
+	notifications_all = Notification.objects.all().order_by('-date')[:10]
+	Notification.objects.filter(user=request.user, is_seen=False).update(is_seen=True)
+
+	template = loader.get_template('editPost_DS.html')
+
+	context = {
+		'form':form,
+		'notifications': notifications,
+		'notifications_all':notifications_all,
+	}
+
+	return HttpResponse(template.render(context, request))
+ 

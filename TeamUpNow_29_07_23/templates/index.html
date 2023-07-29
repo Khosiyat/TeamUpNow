@@ -1,0 +1,379 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<style>
+
+.box_mentorsProfileIndex_picture {
+    border-radius: 150px 150px 150px 150px;
+    /* background-color: #FFFFFF; */
+    /* border: 0.1px solid #18A558; */
+    border: 0.5px solid #18A558;
+    padding-inline-start: 2px;
+    padding-inline-end: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px; 
+
+    margin-bottom: 300px;
+  
+    width: 50%;
+    height: 75%;
+    opacity: 50%;
+  }
+
+  /* CONTAINER */
+container_login{
+float: right;
+transform: translate(560%, 0%);
+}
+
+container_mentorsStream{
+float: right;
+transform: translate(300%, 0%);
+}
+
+title_headerPrimary_link { 
+  border-radius: 5px 5px 5px 5px;
+    color: #18A558;
+    /* text-transform: uppercase; */
+    opacity: 90%;
+    background-color: none;
+  }
+
+  title_headerPrimary_link:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
+  background-color: rgb(250, 250, 250);
+}
+
+title_headerPrimaryCategory_link { 
+  border-radius: 5px 5px 5px 5px;
+    color: #18A558;
+    text-transform: uppercase;
+    opacity: 90%;
+    background-color: none;
+  }
+
+  title_headerPrimaryCategory_link:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
+  background-color: rgb(250, 250, 250);
+}
+
+
+
+title_headerPrimaryName_link { 
+  border-radius: 5px 5px 5px 5px;
+    color: #18A558;
+    /* text-transform: uppercase; */
+    opacity: 50%;
+    background-color: none;
+  }
+
+  title_headerPrimaryName_link:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
+  background-color: rgb(250, 250, 250);
+}
+
+  title_headerSecondary_link {
+    font-size: 16px;
+    color: #000000;
+    /* text-transform: uppercase; */
+    opacity: 20%;
+  }
+
+  title_header_stream {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    color: #000000;
+    text-transform: uppercase;
+    -ms-text-size-adjust: 50%;
+    
+    
+  }
+
+  box_header_stream { 
+    width: 100%;
+    /* border: 0.2px solid #000000; */
+    padding-left: 45%; 
+    padding-right: 25%; 
+    opacity: 20%;
+  }
+
+  box_badges_stream { 
+    width: 100%;
+    /* border: 0.2px solid #000000; */
+    margin-left: 50px; 
+    /* padding-right: 25%;  */
+    /* opacity: 20%; */
+  }
+
+.box_stream_tags {
+  border-radius: 5px 5px 5px 5px;
+  height: 100px;
+  width: 170px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  padding-top: 10px;
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+}
+.box_stream_tags:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
+}
+
+.box_stream_mentors {
+  border-radius: 5px 5px 5px 5px;
+  height: 290px;
+  width: 195px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  padding-top: 0px;
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+}
+.box_stream_mentors:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
+}
+  
+</style>
+
+<div class="split left"> 
+
+<box_header_stream><title_header_stream><strong><a href="{% url 'newpost' %}">Stream Tech Content </a></strong></title_header_stream> </box_header_stream>
+<!-- <button type="submit" name="action" class="button" style="width: 100%;"><a href="{% url 'newpost' %}"> <title_header> Create Tech Content </title_header></a></button> -->
+<br>
+<br> 
+<br> 
+
+<center>
+  <box_badges_stream>
+<div class="columns" >
+  {% for post_item in post_mentors %}
+  <div style="padding-right: 26px;">
+    <div class="box_stream_mentors">
+      <a  href="{% url 'profile' post_item.user %}">
+        {% if post_item.content.first.file.name|slice:"-2:" == 'png' or post_item.content.first.file.name|slice:"-2:" == 'jpg' %}
+        <figure>
+          <h1><strong>Languages (create new fields)</strong></h1>
+        <br>
+        <div class="columns">
+          {% for post_item in post_mentors %}
+            <div style="padding-right: 1px;">
+              <a href="{% url 'profile' post_item.user %}">  
+                <small style="opacity: 50%;">{{ post_item.posted | naturaltime }}</small>
+
+              </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+        </figure>
+      {% else %}
+
+      {% if post_item.user.profile.picture %}
+      <p class="image is-128x128"><img class="box_mentorsProfileIndex_picture" src="{{ post_item.user.profile.picture.url }}"></p>
+      {% else %}
+      <p class="image is-128x128"><img class="box_mentorsProfileIndex_picture" src="{% static 'img/TeamUpNowUp_white.png' %}" width="32" height="32"></p>
+      {% endif %} 
+      
+      {% endif %}
+      <div class="media-content">
+        
+      {% if post_item.user.profile.first_name %}
+        <a href="{% url 'profile' post_item.user %}"><title_headerPrimaryName_link>{{ post_item.user.profile.first_name }} {{ post_item.user.profile.last_name }}</title_headerPrimaryName_link></a>
+      {% else %}
+      <a href="{% url 'profile' post_item.user %}"><p class="title is-4">@{{ post_item.user.username }}</p></a> 
+      {% endif %}  
+      <p><small style="opacity: 50%;">{{ post_item.posted | naturaltime }}</small></p>
+      <p><a href='{{ post_item.get_absolute_url }}'><title_headerPrimaryCategory_link>{{ post_item.classCategory }}</title_headerPrimaryCategory_link></a></p> 
+      {% for tag in post_item.tags.all %}<a href="{{ tag.get_absolute_url }}"><title_headerPrimary_link>#{{ tag }}</title_headerPrimary_link></a>{% endfor %}
+      </div>
+    </div>
+    </a>
+  </div>
+    
+    
+{% empty %}
+
+
+
+<div class="columns" >
+  {% for post_item in post_mentors_all %}
+  <div style="padding-right: 26px;">
+    <div class="box_stream_mentors">
+      <a  href="{% url 'profile' post_item.user %}">
+        {% if post_item.content.first.file.name|slice:"-2:" == 'png' or post_item.content.first.file.name|slice:"-2:" == 'jpg' %}
+        <figure>
+          <h1><strong>Languages (create new fields)</strong></h1>
+        <br>
+        <div class="columns">
+          {% for post_item in post_mentors_all %}
+            <div style="padding-right: 1px;">
+              <a href="{% url 'profile' post_item.user %}">  
+                <small style="opacity: 50%;">{{ post_item.posted | naturaltime }}</small>
+
+              </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+        </figure>
+      {% else %}
+
+      {% if post_item.user.profile.picture %}
+        <p class="image is-128x128"><img class="box_mentorsProfileIndex_picture" src="{{ post_item.user.profile.picture.url }}"></p>
+      {% else %}
+      <p class="image is-128x128"><img class="box_mentorsProfileIndex_picture" src="{% static 'img/TeamUpNowUp_white.png' %}" width="32" height="32"></p>
+      {% endif %} 
+      
+      {% endif %}
+      <div class="media-content">
+        
+      {% if post_item.user.profile.first_name %}
+        <a href="{% url 'profile' post_item.user %}"><title_headerPrimaryName_link>{{ post_item.user.profile.first_name }} {{ post_item.user.profile.last_name }}</title_headerPrimaryName_link></a>
+      {% else %}
+      <a href="{% url 'profile' post_item.user %}"><p class="title is-4">@{{ post_item.user.username }}</p></a> 
+      {% endif %}  
+      <p><small style="opacity: 50%;">{{ post_item.posted | naturaltime }}</small></p>
+      <p><a href='{{ post_item.get_absolute_url }}'><title_headerPrimaryCategory_link>{{ post_item.classCategory }}</title_headerPrimaryCategory_link></a></p> 
+      {% for tag in post_item.tags.all %}<a href="{{ tag.get_absolute_url }}"><title_headerPrimary_link>#{{ tag }}</title_headerPrimary_link></a>{% endfor %}
+    </div>
+      </div>
+      </a>
+    </div>
+
+    {% endfor %}
+
+  {% endfor %}
+</div> 
+</box_badges_stream>
+</center>
+
+
+
+
+<box_header_stream><title_header_stream><strong><a href="{% url 'newpost_StartUp' %}">Stream StartUp Content </a></strong></title_header_stream> </box_header_stream>
+<!-- <button type="submit" name="action" class="button" style="width: 100%;"><a href="{% url 'newpost_StartUp' %}"> <title_header> Create StartUp Content </title_header></a></button> -->
+<br>
+<br> 
+<br> 
+<center>
+  <box_badges_stream>
+<div class="columns" >
+  {% for post_item in post_mentors_StartUp %}
+  <div style="padding-right: 26px;">
+    <div class="box_stream_mentors">
+      <a  href="{% url 'profile' post_item.user %}">
+        {% if post_item.content.first.file.name|slice:"-2:" == 'png' or post_item.content.first.file.name|slice:"-2:" == 'jpg' %}
+        <figure>
+          <h1><strong>Languages (create new fields)</strong></h1>
+        <br>
+        <div class="columns">
+          {% for post_item in post_mentors_StartUp %}
+            <div style="padding-right: 1px;">
+              <a href="{% url 'profile' post_item.user %}">  
+                <small style="opacity: 50%;">{{ post_item.posted | naturaltime }}</small>
+
+              </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+        </figure>
+      {% else %}
+
+      {% if post_item.user.profile.picture %}
+      <p class="image is-128x128"><img class="box_mentorsProfileIndex_picture" src="{{ post_item.user.profile.picture.url }}"></p>
+      {% else %}
+      <p class="image is-128x128"><img class="box_mentorsProfileIndex_picture" src="{% static 'img/TeamUpNowUp_white.png' %}" width="32" height="32"></p>
+      {% endif %} 
+      
+      {% endif %}
+      <div class="media-content">
+        
+      {% if post_item.user.profile.first_name %}
+        <a href="{% url 'profile' post_item.user %}"><title_headerPrimaryName_link>{{ post_item.user.profile.first_name }} {{ post_item.user.profile.last_name }}</title_headerPrimaryName_link></a>
+      {% else %}
+      <a href="{% url 'profile' post_item.user %}"><p class="title is-4">@{{ post_item.user.username }}</p></a> 
+      {% endif %}  
+      <p><small style="opacity: 50%;">{{ post_item.posted | naturaltime }}</small></p>
+      <p><a href='{{ post_item.get_absolute_url }}'><title_headerPrimaryCategory_link>{{ post_item.classCategory }}</title_headerPrimaryCategory_link></a></p> 
+      {% for tag in post_item.tag.all %}<a href="{{ tag.get_absolute_url }}"><title_headerPrimary_link>#{{ tag }}</title_headerPrimary_link></a>{% endfor %}
+      </div>
+    </div>
+    </a>
+  </div>
+    
+    
+{% empty %}
+
+<div class="columns" >
+  {% for post_item in post_mentors_all_StartUp %}
+  <div style="padding-right: 26px;">
+    <div class="box_stream_mentors">
+      <a  href="{% url 'profile' post_item.user %}">
+        {% if post_item.content.first.file.name|slice:"-2:" == 'png' or post_item.content.first.file.name|slice:"-2:" == 'jpg' %}
+        <figure>
+          <h1><strong>Languages (create new fields)</strong></h1>
+        <br>
+        <div class="columns">
+          {% for post_item in post_mentors_all_StartUp %}
+            <div style="padding-right: 1px;">
+              <a href="{% url 'profile' post_item.user %}">  
+                <small style="opacity: 50%;">{{ post_item.posted | naturaltime }}</small>
+
+              </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+        </figure>
+      {% else %}
+
+      {% if post_item.user.profile.picture %}
+        <p class="image is-128x128"><img class="box_mentorsProfileIndex_picture" src="{{ post_item.user.profile.picture.url }}"></p>
+      {% else %}
+      <p class="image is-128x128"><img class="box_mentorsProfileIndex_picture" src="{% static 'img/TeamUpNowUp_white.png' %}" width="32" height="32"></p>
+      {% endif %} 
+      
+      {% endif %}
+      <div class="media-content">
+        
+      {% if post_item.user.profile.first_name %}
+        <a href="{% url 'profile' post_item.user %}"><title_headerPrimaryName_link>{{ post_item.user.profile.first_name }} {{ post_item.user.profile.last_name }}</title_headerPrimaryName_link></a>
+      {% else %}
+      <a href="{% url 'profile' post_item.user %}"><p class="title is-4">@{{ post_item.user.username }}</p></a> 
+      {% endif %}  
+      <p><small style="opacity: 50%;">{{ post_item.posted | naturaltime }}</small></p>
+      <p><a href='{{ post_item.get_absolute_url }}'><title_headerPrimaryCategory_link>{{ post_item.classCategory }}</title_headerPrimaryCategory_link></a></p> 
+      {% for tag in post_item.tag.all %}<a href="{{ tag.get_absolute_url }}"><title_headerPrimary_link>#{{ tag }}</title_headerPrimary_link></a>{% endfor %}
+    </div>
+      </div>
+      </a>
+    </div>
+
+    {% endfor %}
+
+  {% endfor %}
+</div> 
+</box_badges_stream>
+</center>
+
+<!-- <br>
+<br> 
+<br> 
+<br> 
+<a href="{% url 'newpost' %}" class="navbar-item"> 
+  <button type="submit" name="action" class="button" style="width: 100%;">Create Tutorial</button>
+</a>  -->
+
+
+</div> 
+{% endblock %}

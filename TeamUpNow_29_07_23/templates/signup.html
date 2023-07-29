@@ -1,0 +1,117 @@
+{% load static %}
+
+<style>
+  /* CONTAINER */
+  container_signUp{
+float: right;
+transform: translate(-200%, 20%);
+}
+
+
+.button_createSignUp {
+  width: 41%; 
+  background-color: #ffffff;
+  border: 1px solid #18A558;
+  color: #18A558;
+  padding: 3px 16px;
+  text-align: center;
+  font-size: 15px;
+  margin: 2px 1px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button_createSignUp:hover {opacity: 1}
+
+
+teamUpNow_signUp {
+    font-size: 18px;
+    color: #000000;
+    text-transform: uppercase;
+    opacity: 35%;
+  }
+
+  title_header_signUp {
+    font-size: 14px;
+    color: #000000;
+    /* text-transform: uppercase; */
+    opacity: 30%;
+  }
+  
+  
+</style>
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TeamUpNow!</title>
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  </head>
+  <body>
+
+    
+<section class="section">
+  <container_signUp> 
+    <div class="card">
+      <div class="card-content">
+
+      <form method="post" action="" role="form">
+      {% csrf_token %}
+      <center><teamUpNow_signUp>Team Up Now!</teamUpNow_signUp></center>
+      <center><title_header_signUp>Create an account</title_header_signUp></center>
+      <br>
+        <p><label for="exampleInputEmail1"  style="opacity: 20%;">Username</label></p>
+          <div class="file is-boxed">
+            {{ form.username }}
+          </div>
+
+        <p><label for="exampleInputEmail1"  style="opacity: 20%;">Email</label></p>
+          <div class="file is-boxed">
+            {{ form.email }}
+          </div>
+
+        <p><label for="exampleInputEmail1"  style="opacity: 20%;">Password</label></p>
+          <div class="file is-boxed">
+            {{ form.password }}
+          </div>
+
+        <p><label for="exampleInputEmail1"  style="opacity: 20%;">Confirm Password</label></p>
+          <div class="file is-boxed">
+            {{ form.confirm_password }}
+          </div>
+
+      <div class="row">
+        <div class="col s12">
+          <span style="color: red; font-weight: bold;">{{ form.errors }}</span>
+        </div>
+      </div>
+
+      <br>
+
+
+      <div class="field">
+        <p class="control">
+          <button type="submit" name="action" class="button" style="width: 100%;">Create</button>
+        </p>
+      </div>
+
+ 
+    </form>
+
+      </div>  
+    </div>
+  </container_signUp>
+</section>
+
+
+
+

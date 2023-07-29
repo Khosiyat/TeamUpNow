@@ -1,0 +1,816 @@
+
+{% load static %}
+{% load humanize %}
+
+
+<style>
+
+container_logo_notificationsLeft{
+  float: left;
+  transform: translate(30%, 70%);
+  opacity: 50%;
+} 
+
+.box_profile_picture {
+    border-radius: 150px 150px 150px 150px;
+    /* background-color: #FFFFFF; */
+    /* border: 0.1px solid #18A558; */
+    border: 2px solid #18A558;
+    padding-inline-start: 5px;
+    padding-inline-end: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  
+    width: 50%;
+    height: 75%;
+    opacity: 70%;
+  }
+    
+  .box_badge_picture {
+    border-radius: 150px 150px 150px 150px;
+    /* background-color: #FFFFFF; */
+    /* border: 0.1px solid #18A558; */
+    border: 1px solid #18A558;
+    padding-inline-start: 2px;
+    padding-inline-end: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px; 
+  
+    width: 50%;
+    height: 75%;
+    opacity: 70%;
+  }
+    
+    .split {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 1px;
+  }
+    
+  
+    .split {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 1px;
+  }
+    
+                
+  .left_bar_notifications_base {
+    height: 100%;
+    width: 25%;
+
+    right: 1%;
+    left: 75%;
+
+    /* top: 3%; */
+    bottom: 1%;
+
+    background-color: #fffefe;
+    border: 0.1px solid #eeeeee;
+
+    margin-top: 1px;
+    padding-top: 70px;
+    padding-bottom: 1px;
+    padding-left: 1px;
+    padding-right: 1px;
+
+    /* overflow-x: hidden; */
+
+    }
+
+  
+      
+  .top {
+  overflow-x: hidden;
+  
+  height: 22%;
+  width: 70%;
+  right: 1%;
+  left: 4%;
+  top: 7%;
+  bottom: 0%;
+  /* bottom: 10%; */
+
+  margin-top: 0%;
+  margin-bottom: 0%;
+  margin-right: 0%;
+  margin-left: 0%;
+
+  background-color: rgb(255, 255, 255); 
+}
+
+
+  
+.bottom {
+  height: 70%;
+  width: 70%;
+  right: 1%;
+  left: 4%;
+  top: 30%;
+  bottom: 1%;
+  background-color: rgb(255, 255, 255); 
+
+  margin-top: 0%;
+  margin-bottom: 0%;
+  margin-right: 0%;
+  margin-left: 0%;
+ 
+  padding-top: 1%;
+  padding-left: 1%;
+}
+
+
+  
+.left {
+  height: 90%;
+  width: 70%;
+  right: 1%;
+  left: 4%;
+  top: 10%;
+  bottom: 1%;
+  background-color: rgb(255, 255, 255); 
+
+  margin-top: 0%;
+  margin-bottom: 0%;
+  margin-right: 0%;
+  margin-left: 0%;
+ 
+  padding-top: 1%;
+  padding-left: 1%;
+}
+
+
+
+title_header {
+    writing-mode: horizontal;
+    transform: rotate(180deg);
+    text-align: left;
+    max-height: 150px;
+    font-size: 12px;
+    padding-left: 3;
+    padding-top: 16;
+  
+    color: #000000;
+    opacity: 50%;
+    text-transform: uppercase;
+  }
+  
+  title_header_active{
+    writing-mode: horizontal;
+    transform: rotate(180deg);
+    text-align: left;
+    max-height: 150px;
+    font-size: 12px;
+    padding-left: 3;
+    padding-top: 16;
+  
+    color: #18A558;
+    opacity: 60%;
+    text-transform: uppercase;
+  }
+
+
+  title_header_profile_mainDetails{
+    writing-mode: horizontal;
+    transform: rotate(180deg);
+    text-align: left;
+    max-height: 150px;
+    font-size: 12px;
+    padding-left: 3;
+    padding-top: 16;
+  
+    color: #18A558;
+    opacity: 70%;
+    text-transform: uppercase;
+  }
+
+  title_header_profile_secondaryDetails{
+    writing-mode: horizontal;
+    transform: rotate(180deg);
+    text-align: left;
+    max-height: 150px;
+    font-size: 12px;
+    padding-left: 3;
+    padding-top: 16;
+  
+    color: #18A558;
+    opacity: 40%;
+  }
+  title_header_profile_links{
+    writing-mode: horizontal;
+    transform: rotate(180deg);
+    text-align: left;
+    max-height: 150px;
+    font-size: 12px;
+    padding-left: 3;
+    padding-top: 16;
+  
+    color: #000000;
+    opacity: 20%;
+  }
+
+  title_header_TeamUp{
+    border-radius: 3px 3px 3px 3px;
+    width: 100%;
+    height: 20px;
+    writing-mode: horizontal;
+    transform: rotate(180deg); 
+    max-height: 150px;
+    font-size: 12px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 1;
+    margin-left: 0px;
+    margin-right: 25px; 
+  
+    color: #ffffff;
+    background-color: #18A558;
+    opacity: 70%;
+    text-transform: uppercase;
+  }
+  
+  title_header_doNotTeamUp{
+    writing-mode: horizontal;
+    transform: rotate(180deg);
+    max-height: 150px;
+    font-size: 12px;
+    padding-left: 3;
+    padding-top: 16;
+  
+    color: #18A558;
+    opacity: 60%;
+    text-transform: uppercase;
+    opacity: 20%;
+  }
+
+    title_header_Notification_name{
+    writing-mode: horizontal;
+    transform: rotate(180deg);
+    max-height: 150px;
+    font-size: 10px;
+    padding-left: 3;
+    padding-top: 16;
+  
+    color: #18A558; 
+    text-transform: uppercase;
+    opacity: 50%;
+  }
+
+  title_header_Notification_date{
+    writing-mode: horizontal;
+    transform: rotate(180deg);
+    max-height: 150px;
+    font-size: 12px;
+    padding-left: 3;
+    padding-top: 16;
+  
+    color: #000000; 
+    /* text-transform: uppercase; */
+    opacity: 30%;
+  }
+
+  title_header_Notification{
+    writing-mode: horizontal;
+    transform: rotate(180deg);
+    max-height: 150px;
+    font-size: 15px;
+    padding-left: 3;
+    padding-top: 16;
+  
+    color: #18A558; 
+    /* text-transform: uppercase; */
+    opacity: 90%;
+  }
+
+  title_header_Edit{
+    border-radius: 3px 3px 3px 3px;
+    width: 100%;
+    height: 20px;
+    writing-mode: horizontal;
+    transform: rotate(180deg); 
+    max-height: 150px;
+    font-size: 12px;
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-top: 1;
+    margin-left: 0px;
+    margin-right: 25px; 
+  
+    color: #ffffff;
+    background-color: #18A558;
+    opacity: 30%;
+    text-transform: uppercase;
+  }
+
+
+  .button_category_profile {
+    border-radius: 3px 3px 3px 3px;
+    width: 100%;
+    height: 20px;
+    writing-mode: horizontal;
+    max-height: 150px;
+    font-size: 12px;
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-top: 1;
+    margin-left: 0px;
+    margin-right: 25px; 
+  
+    color: #ffffff;
+    background-color: #18A558;
+    border: 1px solid #ffffff;
+    opacity: 60%;
+    text-transform: uppercase;
+}
+
+
+button_category_profileText{
+    writing-mode: horizontal;
+    max-height: 150px;
+    font-size: 12px;
+    padding-left: 3;
+    /* padding-top: 0px; */
+  
+    color: #ffffff;
+    opacity: 100%;
+    text-transform: uppercase;
+    opacity: 100%;
+  }
+
+
+  title_header_Post_illustrated{
+    writing-mode: horizontal;
+    transform: rotate(180deg);
+    max-height: 150px;
+    font-size: 15px;
+    padding-left: 3;
+    padding-top: 16;
+  
+    color: #4C78A8; 
+    /* text-transform: uppercase; */
+    opacity: 90%;
+  }
+
+  title_header_Post_instructed{
+    writing-mode: horizontal;
+    transform: rotate(180deg);
+    max-height: 150px;
+    font-size: 15px;
+    padding-left: 3;
+    padding-top: 16;
+  
+    color: #F58518; 
+    /* text-transform: uppercase; */
+    opacity: 90%;
+  }
+
+  title_header_Post_follow{
+    writing-mode: horizontal;
+    transform: rotate(180deg);
+    max-height: 150px;
+    font-size: 15px;
+    padding-left: 3;
+    padding-top: 16;
+  
+    color: #18A558; 
+    /* text-transform: uppercase; */
+    opacity: 80%;
+  }
+
+  title_header_Post_unfollow{
+    writing-mode: horizontal;
+    transform: rotate(180deg);
+    max-height: 150px;
+    font-size: 15px;
+    padding-left: 3;
+    padding-top: 16;
+  
+    color: #18A558; 
+    /* text-transform: uppercase; */
+    opacity: 20%;
+  }
+  </style>
+
+  
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Team Up Now!</title>
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  </head>
+  <body>
+           
+    <div class="split left_bar_notifications_base"> 
+      
+              <!-- Tech NOTIFICATIONS -->
+      
+                {% for notification in notifications %}
+                
+                {% if notification.notification_type == 2 %}
+                 
+                      <div class="box">
+                      <a href="{% url 'delete-notification' notification.id %}" class="delete"></a>
+
+                      <article class="media">
+                        <a href="{% url 'profile' notification.sender %}"> 
+                          <figure class="media-left">
+                            <p class="image is-64x64">
+                                {% if notification.sender.profile.picture %}
+                                <img class="box_badge_picture" src="{{ notification.sender.profile.picture.url }}">
+                                
+                                {% else %}
+                                    <img class="box_badge_picture" src="{% static 'img/instagram_black.png' %}" alt="Placeholder image">
+                                {% endif %}
+                            </p>
+                          </figure>
+                        </a>
+                  <div class="media-content">
+                    <div class="content">
+                      
+                        <strong><title_header_Notification_name>{{ notification.sender.profile.first_name }} {{ notification.sender.profile.last_name }}</title_header_Notification_name></strong>  
+                        <br> 
+                        <a href="{% url 'postdetails' notification.post.id %}"> <title_header_Notification>Asked question from you </title_header_Notification></a>
+                        <br>
+                        <strong><small><title_header_Notification_date>{{ notification.date|naturaltime }}</title_header_Notification_date></small></strong>
+                        
+                    </div>
+                  </div> 
+                </article>
+
+                      </div> 
+                {% endif %}
+                
+
+
+                {% if notification.notification_type == 3 %}
+                      <div class="box">
+                      <a href="{% url 'delete-notification' notification.id %}" class="delete"></a>
+
+                      <article class="media">
+                        <figure class="media-left">
+                          <a href="{% url 'profile' notification.sender %}"> 
+                          <p class="image is-64x64">
+                                {% if notification.sender.profile.picture %}
+                                <img class="box_badge_picture" src="{{ notification.sender.profile.picture.url }}">
+                                {% else %}
+                                  <img class="box_badge_picture" src="{% static 'img/instagram_black.png' %}" alt="Placeholder image">
+                              {% endif %}
+                          </p>
+                        </figure>
+                          </a>
+                        <div class="media-content">
+                          <div class="content">
+                              <strong><title_header_Notification_name>{{ notification.sender.profile.first_name }} {{ notification.sender.profile.last_name }}</title_header_Notification_name></strong>
+                              <br> 
+                              <a href="{% url 'profile' notification.sender %}"> <title_header_Notification> Chose you as a mentor</title_header_Notification></a>
+                              <br>
+                               <strong><small><title_header_Notification_date>{{ notification.date|naturaltime }}</title_header_Notification_date></small></strong>
+                          </div>
+                        </div>
+
+                      </article>
+
+                      </div>
+                      
+                {% endif %}
+
+
+                
+                {% if notification.notification_type == 1 %}
+                      <div class="box">
+                      <a href="{% url 'delete-notification' notification.id %}" class="delete"></a>
+
+                        <article class="media">
+                        <figure class="media-left">
+                          <a href="{% url 'profile' notification.sender %}"> 
+                          <p class="image is-64x64">
+                              {% if notification.sender.profile.picture %}
+                              <img class="box_badge_picture" src="{{ notification.sender.profile.picture.url }}">
+                                {% else %}
+                                  <img class="box_badge_picture" src="{% static 'img/instagram_black.png' %}" alt="Placeholder image">
+                              {% endif %}
+                          </p>
+                        </figure>
+                            </a>
+                        <div class="media-content">
+                          <div class="content">
+                              <strong><title_header_Notification_name>{{ notification.sender.profile.first_name }} {{ notification.sender.profile.last_name }}</title_header_Notification_name></strong>
+                              <br> 
+                            <a href="{% url 'postdetails' notification.post.id %}"> <title_header_Notification>Upvoted your tutorial</title_header_Notification> </a>
+                              
+                              <br>
+                              <strong><small><title_header_Notification_date>{{ notification.date|naturaltime }}</title_header_Notification_date></small></strong>
+                          </div>
+                        </div> 
+                      </article>
+
+                      </div>
+                {% endif %}
+
+
+
+
+                {% empty %}
+
+                {% for notification in notifications_all %}
+
+                {% if notification.notification_type == 2 %}
+                 
+                <div class="box">
+                <a href="{% url 'delete-notification' notification.id %}" class="delete"></a>
+
+                <article class="media">
+                  <a href="{% url 'profile' notification.sender %}"> 
+                    <figure class="media-left">
+                      <p class="image is-64x64">
+                          {% if notification.sender.profile.picture %}
+                          <img class="box_badge_picture" src="{{ notification.sender.profile.picture.url }}">
+                          
+                          {% else %}
+                              <img class="box_badge_picture" src="{% static 'img/instagram_black.png' %}" alt="Placeholder image">
+                          {% endif %}
+                      </p>
+                    </figure>
+                  </a>
+            <div class="media-content">
+              <div class="content">
+               
+                
+                  <strong>{{ notification.sender.profile.first_name }} {{ notification.sender.profile.last_name }}</strong>  
+                  <br> 
+                  
+                  specialist in <a href="{% url 'profile' notification.sender %}"> {{ notification.sender.profile.interstCategory }}</a>
+                  <br>
+                
+                  engaged in <a href="{% url 'postdetails' notification.post.id %}"> {{ notification.post.classCategory}}</a>
+                  <br>
+
+                  <strong><small><title_header_Notification_date>{{ notification.date|naturaltime }}</title_header_Notification_date></small></strong>
+                  
+              </div>
+            </div> 
+          </article>
+
+                </div> 
+               {% endif %}
+
+                {% endfor %} 
+                
+                <container_logo_notificationsLeft>
+                  <a href="{% url 'profile' request.user %}">
+                    <img src="{% static 'img/TeamUpNowUp_white.png' %}" width="244" height="244"> 
+                  </a>
+                </container_logo_notificationsLeft>
+
+                {% endfor %} 
+                
+
+
+                <!-- StartUp NOTIFICATIONS -->
+                
+                {% for notification in notifications_startUp %}
+                
+                {% if notification.notification_type == 2 %}
+                 
+                      <div class="box">
+                      <a href="{% url 'delete-notification' notification.id %}" class="delete"></a>
+
+                      <article class="media">
+                        <a href="{% url 'profile' notification.sender %}"> 
+                          <figure class="media-left">
+                            <p class="image is-64x64">
+                                {% if notification.sender.profile.picture %}
+                                <img class="box_badge_picture" src="{{ notification.sender.profile.picture.url }}">
+                                
+                                {% else %}
+                                    <img class="box_badge_picture" src="{% static 'img/instagram_black.png' %}" alt="Placeholder image">
+                                {% endif %}
+                            </p>
+                          </figure>
+                        </a>
+                  <div class="media-content">
+                    <div class="content">
+                      
+                        <strong><title_header_Notification_name>{{ notification.sender.profile.first_name }} {{ notification.sender.profile.last_name }}</title_header_Notification_name></strong>  
+                        <br> 
+                        <a href="{% url 'postdetails' notification.post.id %}"> <title_header_Notification>Asked question from you </title_header_Notification></a>
+                        <br>
+                        <strong><small><title_header_Notification_date>{{ notification.date|naturaltime }}</title_header_Notification_date></small></strong>
+                        
+                    </div>
+                  </div> 
+                </article>
+
+                      </div> 
+                {% endif %}
+                
+
+
+                {% if notification.notification_type == 3 %}
+                      <div class="box">
+                      <a href="{% url 'delete-notification' notification.id %}" class="delete"></a>
+
+                      <article class="media">
+                        <figure class="media-left">
+                          <a href="{% url 'profile' notification.sender %}"> 
+                          <p class="image is-64x64">
+                                {% if notification.sender.profile.picture %}
+                                <img class="box_badge_picture" src="{{ notification.sender.profile.picture.url }}">
+                                {% else %}
+                                  <img class="box_badge_picture" src="{% static 'img/instagram_black.png' %}" alt="Placeholder image">
+                              {% endif %}
+                          </p>
+                        </figure>
+                          </a>
+                        <div class="media-content">
+                          <div class="content">
+                              <strong><title_header_Notification_name>{{ notification.sender.profile.first_name }} {{ notification.sender.profile.last_name }}</title_header_Notification_name></strong>
+                              <br> 
+                              <a href="{% url 'profile' notification.sender %}"> <title_header_Notification> Chose you as a mentor</title_header_Notification></a>
+                              <br>
+                               <strong><small><title_header_Notification_date>{{ notification.date|naturaltime }}</title_header_Notification_date></small></strong>
+                          </div>
+                        </div>
+
+                      </article>
+
+                      </div>
+                      
+                {% endif %}
+
+
+                
+                {% if notification.notification_type == 1 %}
+                      <div class="box">
+                      <a href="{% url 'delete-notification' notification.id %}" class="delete"></a>
+
+                        <article class="media">
+                        <figure class="media-left">
+                          <a href="{% url 'profile' notification.sender %}"> 
+                          <p class="image is-64x64">
+                              {% if notification.sender.profile.picture %}
+                              <img class="box_badge_picture" src="{{ notification.sender.profile.picture.url }}">
+                                {% else %}
+                                  <img class="box_badge_picture" src="{% static 'img/instagram_black.png' %}" alt="Placeholder image">
+                              {% endif %}
+                          </p>
+                        </figure>
+                            </a>
+                        <div class="media-content">
+                          <div class="content">
+                              <strong><title_header_Notification_name>{{ notification.sender.profile.first_name }} {{ notification.sender.profile.last_name }}</title_header_Notification_name></strong>
+                              <br> 
+                            <a href="{% url 'postdetails' notification.post.id %}"> <title_header_Notification>Upvoted your tutorial</title_header_Notification> </a>
+                              
+                              <br>
+                              <strong><small><title_header_Notification_date>{{ notification.date|naturaltime }}</title_header_Notification_date></small></strong>
+                          </div>
+                        </div> 
+                      </article>
+
+                      </div>
+                {% endif %}
+
+
+
+
+                {% empty %}
+
+                {% for notification in notifications_startUp_all %}
+
+                {% if notification.notification_type == 2 %}
+                 
+                <div class="box">
+                <a href="{% url 'delete-notification' notification.id %}" class="delete"></a>
+
+                <article class="media">
+                  <a href="{% url 'profile' notification.sender %}"> 
+                    <figure class="media-left">
+                      <p class="image is-64x64">
+                          {% if notification.sender.profile.picture %}
+                          <img class="box_badge_picture" src="{{ notification.sender.profile.picture.url }}">
+                          
+                          {% else %}
+                              <img class="box_badge_picture" src="{% static 'img/instagram_black.png' %}" alt="Placeholder image">
+                          {% endif %}
+                      </p>
+                    </figure>
+                  </a>
+            <div class="media-content">
+              <div class="content">
+               
+                
+                  <strong>{{ notification.sender.profile.first_name }} {{ notification.sender.profile.last_name }}</strong>  
+                  <br> 
+                  
+                  specialist in <a href="{% url 'profile' notification.sender %}"> {{ notification.sender.profile.interstCategory }}</a>
+                  <br>
+                
+                  engaged in <a href="{% url 'postdetails' notification.post.id %}"> {{ notification.post.classCategory}}</a>
+                  <br>
+
+                  <strong><small><title_header_Notification_date>{{ notification.date|naturaltime }}</title_header_Notification_date></small></strong>
+                  
+              </div>
+            </div> 
+          </article>
+
+                </div> 
+               {% endif %}
+
+                {% endfor %}  
+
+                {% endfor %} 
+
+
+
+
+
+    </div>
+    
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+
+    <div class="navbar-item has-dropdown is-hoverable">
+      <a class="navbar-item" href="{% url 'index' %}">
+        <img  src="{% static 'img/instagram_black.png' %}" width="32" height="32">
+      </a>
+
+      <div class="navbar-dropdown">
+        <a href="{% url 'index' %}" class="navbar-item"> 
+          Stream
+        </a>   
+        <a href="{% url 'profile' request.user %}" class="navbar-item"> 
+          <strong>{{ request.user }}</strong>
+        </a> 
+        <hr class="navbar-divider">
+        <a href="{% url 'logout' %}" class="navbar-item">
+          Log out
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+
+
+  <div class="navbar-item has-dropdown is-hoverable">
+    <a class="navbar-item" href="{% url 'index' %}">
+      <h1 style="color: #18A558;">Create</h1>
+    </a>
+
+    <div class="navbar-dropdown">
+      <a href="{% url 'newpost' %}" class="navbar-item"> 
+        Technical
+      </a>   
+      <a href="{% url 'newpost_StartUp' %}"class="navbar-item"> 
+        StarUp
+      </a>
+    </div>
+  </div>
+</div> 
+
+</nav>
+
+      {% block banner %}
+      {% endblock %}
+
+  <section class="section">
+    <div class="container">
+
+      {% block content %}
+      {% endblock %}
+
+
+      {% block pagination %}
+      {% endblock %}
+
+    </div>
+  </section>
+
+  </body>
+ 
+
+  
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'js/init.js' %}"></script>
+  <script src="{% static 'js/slider.js' %}"></script>
+</html>

@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="columns is-mobile has-text-centered">
+  <div class="column is-half is-offset-one-quarter">
+
+    <div class="card">
+    <div class="card-content">
+
+    <form method="post" action="" enctype="multipart/form-data" role="form">
+    {% csrf_token %}
+    <center><p><h3 style="opacity: 10%; color: #18A558;"  class="title is-5">CREATE STARTUP CONTENT</h3></p></center>
+
+
+            <div class="field">
+              <p class="control has-icons-left">
+                <center><p><h3 style="opacity: 50%;"  class="title is-6">What is this session about?</h3></p></center> 
+                {{ form.caption }}
+                <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+        </p>
+          </div>
+        
+          <div class="field">
+            <p class="control has-icons-left">
+              <center><p><h3 style="opacity: 50%;"  class="title is-6">Stack Tags (such as founders, MVP, B2B, B2C)</h3></p></center> 
+              {{ form.tagsStartUp }}
+              <span class="icon is-small is-left">
+          <i class="fas fa-lock"></i>
+        </span>
+      </p>
+        </div>
+
+        <div class="field">
+          <p class="control has-icons-left">
+            <center><p><h3 style="opacity: 50%;"  class="title is-6">The Author Of The Video</h3></p></center> 
+            {{ form.authorOfTheVideo }}
+            <span class="icon is-small is-left">
+        <i class="fas fa-lock"></i>
+      </span>
+    </p>
+      </div>
+
+        <center>
+        <table> 
+          <tr>
+
+            <td>
+              <center>
+              <div class="field">
+                <p class="control has-icons-left">
+                  <center><h3 style="opacity: 50%;"  class="title is-6">Video Source</h3></center> 
+                <h6 style="opacity: 30%;">(video link)</h6>
+                  {{ form.lessonLink }}
+                  <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+            </div>
+          </center>
+            </td> 
+            <td>
+              <center>
+              <div class="field">
+                <p class="control has-icons-left">
+                  <center><h3 style="opacity: 50%;"  class="title is-6">Reading Source</h3></center> 
+                <h6 style="opacity: 30%;">(Reading Source link)</h6>
+                  {{ form.codeSourceOfTheProject }}
+                  <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+            </div>
+          </center>
+            </td>
+
+            <td>
+              <center> 
+              <div class="field">
+                <p class="control has-icons-left">
+                  <center><h3 style="opacity: 50%;"  class="title is-6">Tutorial Category</h3></center>
+                <h6 style="opacity: 30%;">(stack, framework, etc)</h6>
+                  {{ form.classCategory }}
+                  <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+            </div>
+          </center>
+            </td>
+
+
+            <!-- <td>
+              <center> 
+              <div class="field">
+                <p class="control has-icons-left">
+                <label class="label is-medium">Choose your files</label>
+                  {{ form.content }}
+                  <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+            </div>
+          </center>
+            </td> -->
+
+          </tr> 
+        </table> 
+      </center>
+      <br>
+
+      <div class="field">
+      <p class="control">
+        <button type="submit" name="action" class="button" style="width: 100%;">Create</button>
+      </p>
+    </div>
+
+
+      </div>
+</div>
+
+
+{% endblock %}

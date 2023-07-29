@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+        
+{% block content %}
+
+
+
+<div class="columns is-mobile">
+  <div class="column is-half is-offset-one-quarter">
+
+    <div class="card">
+    <div class="card-content">
+
+    <form method="post" enctype="multipart/form-data" action="" role="form">
+      {% csrf_token %}
+      <center><p><h3 style="opacity: 50%;"  class="title is-3">Edit Profile</h3></p></center>
+
+          <div class="field">
+            <label class="label is-small" style="opacity: 50%;">Choose your picture</label>
+              <div class="file is-boxed">
+                {{ form.picture }}
+              </div>
+          </div>
+
+          <div class="field">
+            <label class="label is-small" style="opacity: 50%;">First name</label>
+              <div class="control">
+                {{ form.first_name }}
+              </div>
+          </div>
+
+          <div class="field">
+            <label class="label is-small" style="opacity: 50%;">Last name</label>
+              <div class="control">
+                {{ form.last_name }}
+              </div>
+          </div>
+
+          <div class="field">
+            <label class="label is-small" style="opacity: 50%;">Location</label>
+              <div class="control">
+                {{ form.location }}
+              </div>
+          </div>
+
+          <div class="field">
+            <label class="label is-small" style="opacity: 50%;">github Profile</label>
+              <div class="control">
+                {{ form.githubProfile }}
+              </div>
+          </div>
+
+          <div class="field">
+            <label class="label is-small" style="opacity: 50%;">linkedIn Profile</label>
+            <div class="control">
+              {{ form.linkedInnProfile }}
+            </div>
+        </div>
+
+        <div class="field">
+          <label class="label is-small" style="opacity: 50%;">interst Field</label>
+          <div class="control">
+            {{ form.interstCategory }}
+          </div>
+      </div> 
+
+      <div class="row">
+        <div class="col s12">
+          <span style="color: red; font-weight: bold;">{{ form.errors }}</span>
+        </div>
+      </div>
+
+
+      <div class="field">
+        <p class="control">
+          <button type="submit" name="action" class="button" style="width: 100%;">Save</button>
+        </p>
+      </div>
+
+    <div class="media-right" style="padding-left: 450px;">
+      <a href="{% url 'change_password' %}" ><title_header>Change Password</title_header></a>
+    </div>
+    <br>
+    <div class="media-right" style="padding-left: 450px;">
+      <a href="{% url 'pre_Delete_account' %}" ><title_header>Delete Account</title_header></a>
+    </div>
+    
+    </form>
+  </div>
+</div>
+
+  </div>
+</div>
+
+{% endblock %}

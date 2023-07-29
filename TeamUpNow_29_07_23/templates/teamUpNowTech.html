@@ -1,0 +1,147 @@
+{% load static %}
+
+<style>
+  container_logoWELCOME_left_teamUpNowTech_login{
+  float: left;
+    transform: translate(255%, 60%);
+}
+
+container_logoWELCOME_left_teamUpNowTech_login{
+  float: left;
+    transform: translate(255%, 60%);
+}
+
+/* CONTAINER */
+container_login{
+float: right;
+transform: translate(-230%, 70%);
+}
+
+container_logo_left{
+  float: left;
+  transform: translate(185%, 60%);
+} 
+.button_login {
+  width: 100%; 
+  background-color: #18A558;
+  border: none;
+  color: white;
+  padding: 3px 16px;
+  text-align: center;
+  font-size: 15px;
+  margin: 2px 1px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button_login:hover {opacity: 1}
+
+
+.button_signUp {
+  width: 100%; 
+  background-color: #ffffff;
+  border: 1px solid #18A558;
+  color: #18A558;
+  padding: 3px 16px;
+  text-align: center;
+  font-size: 15px;
+  margin: 2px 1px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button_signUp:hover {opacity: 1}
+
+
+title_header {
+    writing-mode: horizontal;
+    transform: rotate(180deg);
+    text-align: left;
+    max-height: 150px;
+    font-size: 12px;
+    padding-left: 3;
+    padding-top: 16;
+  
+    color: #000000;
+    opacity: 50%;
+    text-transform: uppercase;
+  }
+  
+
+  .custom-field {
+  font-size: 14px;
+  position: relative;
+  padding-bottom: 2%;
+}
+
+.custom-field input { 
+  border: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: #f2f2f2;
+  padding: 12px;
+  border-radius: 3px;
+  width: 250px;
+  font-size: 14px;
+}
+
+.custom-field .placeholder {
+  position: absolute;
+  left: 12px;
+  bottom: 50%;
+  top: 22px;  
+  transform: translateY(-50%);
+  width: calc(100% - 24px);  
+  color: #aaa;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+  
+</style>
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TeamUpNow </title>
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+  </head> 
+  
+  <container_login>
+    <form action="" method=POST>
+      {% csrf_token %}
+    <form>
+
+      <div class="custom-field">
+        <p><center><label for="exampleInputEmail1" style="opacity: 30%;">Email</label></center></p>
+        <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
+      </div>
+    
+      
+      <div class="custom-field">
+        <p><center><label for="exampleInputPassword1" style="opacity: 30%;">Password</label></center></p>
+        <input type="password" class="form-control" name="password" aria-describedby="emailHelp">
+      </div>
+ 
+ 
+        <input type="submit" value="Submit" class="button_login">
+    </form>
+    <a href="{% url 'signup' %}" class="button_signUp">Sign Up Now</a>
+  </container_login>
+
+  <container_logo_left>
+    <a href="{% url 'signup' %}">
+      <img src="{% static 'img/TeamUpNowUp_white.png' %}" width="244" height="244"> 
+    </a>
+  </container_logo_left>
+ 
+</html>

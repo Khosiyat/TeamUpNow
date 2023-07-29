@@ -1,0 +1,37 @@
+{% load static %}
+
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TeamUpNow </title>
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+  </head> 
+  
+  <container_login>
+    <form action="" method=POST>
+      {% csrf_token %}
+    <form>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Username</label>
+        <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <input type="password" class="form-control" name="password">
+      </div> 
+        <input type="submit" value="Submit" class="btn btn-secondary">
+    </form>
+    <a href="{% url 'signup' %}" class="button_signUp_groups">Sign Up Now</a>
+  </container_login>
+
+  <container_logo_left>
+    <a href="{% url 'signup' %}">
+      <img src="{% static 'img/TeamUpNowUp_white.png' %}" width="244" height="244"> 
+    </a>
+  </container_logo_left>
+ 
+</html>   
+
+

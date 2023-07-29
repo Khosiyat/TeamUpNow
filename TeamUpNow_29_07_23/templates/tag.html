@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+
+<div class="split left"> 
+      <center>
+        <div class="hero-body">
+        <div class="container">
+          <h1 style="font-size: 30px" class="title">
+            #{{ tag.title }}
+          </h1>
+        </div>
+      </div> 
+      
+          {% for post in posts %}   
+
+                  <div class="box" style="width: 50%;">
+                <figure class="image is-256x256">
+                  <div class="media">
+
+                    <div class="media-left">
+                      <figure class="image is-48x48">
+                        <a href="{% url 'profile' post.user %}"> 
+                        {% if post.user.profile.picture %}
+                        <p class="image is-128x128"><img class="box_badge_picture"  src="{{ post.user.profile.picture.url }}"></p>
+                        {% else %}
+                          <img class="box_badge_picture" src="{% static 'img/instagram_black.png' %}" alt="Placeholder image">
+                        {% endif %}
+                      </a>
+                      </figure>
+                    </div>
+          
+                    <div class="media-content">
+                      <small>{{ post.posted }}</small><small style="opacity: 50%;"><a href="{% url 'postdetails' post.id %}"> Engage Now</a></small>
+                      {% if post.user.profile.first_name %} 
+                        <p class="title is-4">{{ post.user.profile.first_name }} {{ post.user.profile.last_name }}</p> 
+                      {% else %}
+                        <p class="title is-4">Unknown</p>
+                      {% endif %} 
+                      <p>{% for tag in post.tags.all %}<a href="{{ tag.get_absolute_url }}">#{{ tag }}</a>{% endfor %} </p>
+                      <p> {{ post.classCategory }}: <a href='{{  post.codeSourceOfTheProject }}'>Code Source Of The Project</a></p>
+          
+                      <p> {{ post.authorOfTheVideo }} : <a href='{{  post.lessonLink }}'>watch tutorial</a></p>
+                        
+                      
+          
+            
+          
+                  </div>
+
+                </figure>
+              </div> 
+          {% endfor %}
+        </center> 
+      </div>
+      
+{% endblock %}

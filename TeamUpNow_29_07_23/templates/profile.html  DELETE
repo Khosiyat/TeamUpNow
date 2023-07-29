@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+
+<div class="split top">
+      <article class="media">
+        <table style="width: 100%;">
+          <th style="width: 25%;">
+          <div class="media-left">
+              <figure class="image is-128x128">
+              {% if user.is_authenticated and user == profile.user %}
+                <a href="{% url 'edit-profile' %}">
+                  {% if profile.picture %}
+                  <p class="image is-128x128"><img class="box_badge_picture"  src="{{ profile.picture.url }}"></p>
+                  {% else %}
+                    <img class="box_profile_picture" src="{% static 'img/instagram_black.png' %}" width="32" height="32">
+                  {% endif %}
+              </a>
+              {% else %}
+                {% if profile.picture %}
+                <p class="image is-128x128"><img class="box_badge_picture"  src="{{ profile.picture.url }}"></p>
+                {% else %}
+                  <img class="box_profile_picture" src="{% static 'img/instagram_black.png' %}" width="32" height="32">
+                {% endif %}
+
+              {% endif %}
+              </figure>
+              
+            {% if user.is_authenticated and user != profile.user %}
+              <div class="media-right">
+                {% if follow_status == True %}
+                  <a href="{% url 'follow' profile.user 0 %}"><title_header_doNotTeamUp>DoNot TeamUp</title_header_doNotTeamUp></a>
+                {% else %}
+                  <a href="{% url 'follow' profile.user 1 %}"><title_header_TeamUp>TeamUp</title_header_TeamUp></a>
+                {% endif  %}
+              </div>
+              {% else %}
+              <div class="media-right">
+                <a href="{% url 'edit-profile' %}"><title_header_Edit>Edit</title_header_Edit></a>
+              </div>
+            {% endif %}
+          </div>
+        </th> 
+          <th style="width: 25%;">
+            <br>
+            <title_header_profile_mainDetails>{% if profile.first_name %}{{ profile.first_name }} {{ profile.last_name }} {% else %}  @{{ profile.user }}{% endif %}</a></title_header_profile_mainDetails>
+            <br>
+            <title_header_profile_mainDetails>{% if profile.interstCategory %}{{ profile.interstCategory }}{% endif %} </a></title_header_profile_mainDetails>
+              <br>
+              <title_header_profile_secondaryDetails>Location: {{ profile.location }}</a></title_header_profile_secondaryDetails>
+              <br>
+              <title_header_profile_secondaryDetails>TeamedUp {{ profile.created }}</a></title_header_profile_secondaryDetails>
+              <br>
+              <a href='{{ profile.linkedInnProfile }}'><title_header_profile_links>linkedIn</title_header_profile_links></a>
+              <a href='{{ profile.githubProfile }}'><title_header_profile_links>github</title_header_profile_links></a>
+            <br>
+          </th> 
+            <th style="width: 50%;">
+              <img class="is-rounded" src="data:image/png;base64, {{followingAndfollowers|safe}}" >
+            
+              <img class="is-rounded" src="data:image/png;base64, {{sum_of_Experience_unique_count|safe}}" >
+            </th>   
+      </table>
+    </article>
+  </section>
+
+
+  <div class="split bottom">
+      <section class="section">
+        <div class="container">
+          <div class="tabs is-centered">
+            <table style="width: 100%;"> 
+              <th style="width: 50%;">
+                <li class="{% if url_name == 'profile' %}is-active{% endif %}">
+                  <a class="button_category_profile" href="{% url 'profile' profile.user %}"> <button_category_profileText>Teaching - {{ posts_count }}</button_category_profileText></a>
+                </li>
+              </th>
+              <th style="width: 50%;">
+                <li class="{% if url_name == 'profilefavorites' %}is-active{% endif %}">
+                  <a class="button_category_profile" href="{% url 'profilefavorites' profile.user %}"><button_category_profileText>Learning - {{ favorites_count }}</button_category_profileText></a>
+                </li>
+              </th> 
+          </table>
+        </div> 
+
+        <div class="columns is-mobile is-multiline is-centered"> 
+        <table class="table table-striped table-hover table-bordered" style="width: 100%;">
+          <th> <title_header>Project Category</title_header> </th>
+          <th> <title_header>Date</title_header> </th>
+          <th> <title_header>Stack Category</title_header> </th>
+          <th> <title_header>illustration</title_header> </th>
+          <th> <title_header>instruction</title_header> </th>
+          <th>  </th>
+
+          {% for post in profileUser_post %}
+            <center>
+              {% if user.is_authenticated and user == profile.user %}
+                <tr>
+                  <td>
+                    <a href="{{ post.get_absolute_url }}"> <title_header> {{ post.classCategory}}  </title_header> </a>
+                  </td>
+                  <td>
+                    <a href="{{ post.get_absolute_url }}"> <title_header> {{ post.posted}} </title_header> </a>
+                  </td>
+                  <td>
+                    <title_header>{% for tag in post.tags.all %}<a href="{{ tag.get_absolute_url }}">#{{ tag }}</a>{% endfor %} </title_header> 
+                  </td>
+                  <td>
+                    <a href="{{ post.get_absolute_url }}"> <title_header> {{ post.illustrated}} </title_header> </a>
+                  </td>
+                  <td>
+                    <a href="{{ post.get_absolute_url }}"> <title_header> {{ post.instructed}} </title_header> </a>
+                  </td>
+                  <td>
+                    <a href="{% url 'EditPost' post.id %}"> <title_header> Edit </title_header> </a>
+                    <a href="{% url 'pre_DeletePost' post.id %}"> <title_header> Delete </title_header> </a>
+                  </td>
+              {% else %} 
+
+                <tr>
+                  <td>
+                    <a href="{{ post.get_absolute_url }}"> <title_header> {{ post.classCategory}}  </title_header> </a>
+                  </td>
+                  <td>
+                    <a href="{{ post.get_absolute_url }}"> <title_header> {{ post.posted}} </title_header> </a>
+                  </td>
+                  <td>
+                    <title_header>{% for tag in post.tags.all %}<a href="{{ tag.get_absolute_url }}">#{{ tag }}</a>{% endfor %} </title_header> 
+                  </td>
+                  <td>
+                    <a href="{{ post.get_absolute_url }}"> <title_header> {{ post.illustrated}} </title_header> </a>
+                  </td>
+                  <td>
+                    <a href="{{ post.get_absolute_url }}"> <title_header> {{ post.instructed}} </title_header> </a>
+                  </td>
+              {% endif %}
+            </center> 
+
+          {% empty %}  
+        </table> 
+            {% if user.is_authenticated and user == profile.user %} 
+            <a href="{% url 'newpost' %}" class="navbar-item"> 
+              Start Mentoring!
+            </a> 
+            {% else %} 
+            <p><h3 class="title is-6">{{ profile.first_name }} is not mentoring yet</h3></p> 
+            {% endif %}
+          
+          {% endfor %}
+          </div>
+        </div> 
+        </section>
+      </div>
+
+
+<!-- <p>
+<a href="{% url 'newpost' %}" class="navbar-item"> 
+<button type="submit" name="action" class="button" style="width: 100%;">Create Tutorial</button>
+</a> 
+</p> -->
+
+{% endblock %}
