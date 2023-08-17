@@ -28,7 +28,7 @@ def teamUpNowTech_login(request):
 			return redirect('index')
 		else:
 			messages.success(request, ("There Was An Error Logging In, Try Again..."))	
-			return redirect('teamUpNowTech_login')	
+			return redirect('teamupnow.tech')	
 	else:
 		return render(request, 'teamUpNowTech_login.html', {})
 
@@ -43,6 +43,6 @@ def teamUpNowTech(request):
 			return redirect('index')
 		else:
 			messages.success(request, ("There Was An Error Logging In, Try Again..."))	
-			return redirect('teamUpNowTech')	
+			return redirect('teamupnow.tech')	
 	else:
 		return render(request, 'teamUpNowTech.html', {})
