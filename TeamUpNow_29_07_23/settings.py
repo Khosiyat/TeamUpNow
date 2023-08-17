@@ -61,7 +61,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'TeamUpNow_29_07_23.urls'
+# ROOT_URLCONF = 'TeamUpNow_29_07_23.urls'
+ROOT_URLCONF = 'teamupnow.tech'
 
 TEMPLATES = [
     {
