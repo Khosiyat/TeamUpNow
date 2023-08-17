@@ -61,8 +61,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# ROOT_URLCONF = 'TeamUpNow_29_07_23.urls'
-ROOT_URLCONF = 'teamupnow.tech'
+ROOT_URLCONF = 'TeamUpNow_29_07_23.urls'
+# ROOT_URLCONF = 'teamupnow.tech'
 
 TEMPLATES = [
     {
@@ -169,7 +169,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'teamUpNowTech'
-LOGIN_URL = 'teamupnow.tech'
+LOGIN_URL = 'teamUpNowTech'
 
 DEFAULT_REDIRECT_URL = "http://www.teamupnow.tech"
 PARENT_HOST = "teamupnow.tech"
