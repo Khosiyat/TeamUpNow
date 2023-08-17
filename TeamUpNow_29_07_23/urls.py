@@ -28,7 +28,9 @@ from django.views.generic.base import RedirectView
 urlpatterns = [
     # path('teamUpNowTech_login/', teamUpNowTech_login, name="teamUpNowTech_login"),
 
-    path(r'^(?P<path>.*)', teamupnow_redirect),
+    # url(r'^(?P<path>.*)', teamupnow_redirect),
+
+    path('teamupnow_redirect/', teamupnow_redirect, name="teamupnow_redirect"),
 
     path('/search/<term>/', RedirectView.as_view(url='https://www.teamupnow.tech/?q=%(term)s')),
 
