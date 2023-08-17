@@ -168,7 +168,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'teamUpNowTech'
-LOGIN_URL = 'teamUpNowTech'
+LOGIN_URL = 'www.teamupnow.tech'
 
 #Celery Broker
 CELERY_BROKER_URL = 'amqp://localhost:5672'
