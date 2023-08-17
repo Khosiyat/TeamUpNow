@@ -29,7 +29,7 @@ from django.conf.urls import url
 urlpatterns = [
     # path('teamUpNowTech_login/', teamUpNowTech_login, name="teamUpNowTech_login"),
 
-    url(r'^(?P<path>.*)', teamupnow_redirect),
+    path(r'^(?P<path>.*)', teamupnow_redirect),
 
     path('/search/<term>/', RedirectView.as_view(url='https://www.teamupnow.tech/?q=%(term)s')),
 
