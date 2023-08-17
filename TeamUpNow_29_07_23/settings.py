@@ -174,7 +174,7 @@ LOGIN_URL = 'teamUpNowTech'
 ROOT_URLCONF = 'TeamUpNow_29_07_23.urls'
 ROOT_HOSTCONF = 'TeamUpNow_29_07_23.hosts'
 DEFAULT_HOST = 'www'
-DEFAULT_REDIRECT_URL = "http://www.teamupnow.tech"
+DEFAULT_REDIRECT_URL = "teamupnow.tech"
 PARENT_HOST = "teamupnow.tech"
 
 #Celery Broker
