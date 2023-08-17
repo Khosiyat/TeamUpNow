@@ -19,15 +19,6 @@ from datetime import date, timedelta,datetime
 from django.conf import settings
 from django.http import HttpResponseRedirect
 
-DEFAULT_REDIRECT_URL = getattr(settings, "DEFAULT_REDIRECT_URL", "teamupnow.tech")
-
-def teamupnow_redirect(request, path=None):
-    new_url = DEFAULT_REDIRECT_URL
-    if path is not None:
-        new_url = DEFAULT_REDIRECT_URL + "/" + path
-    return HttpResponseRedirect(new_url)
-	
-
 
 def teamUpNowTech_login(request):
 	if request.method == "POST":
