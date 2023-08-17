@@ -61,7 +61,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'TeamUpNow_29_07_23.urls'
+# ROOT_URLCONF = 'TeamUpNow_29_07_23.urls'
 # ROOT_URLCONF = 'teamupnow.tech'
 
 TEMPLATES = [
@@ -171,6 +171,9 @@ LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'teamUpNowTech'
 LOGIN_URL = 'teamUpNowTech'
 
+ROOT_URLCONF = 'TeamUpNow_29_07_23.urls'
+ROOT_HOSTCONF = 'TeamUpNow_29_07_23.hosts'
+DEFAULT_HOST = 'www'
 DEFAULT_REDIRECT_URL = "http://www.teamupnow.tech"
 PARENT_HOST = "teamupnow.tech"
 
