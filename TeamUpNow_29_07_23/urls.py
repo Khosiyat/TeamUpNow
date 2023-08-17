@@ -22,9 +22,13 @@ from authy.views import UserProfile, profilefavorites, follow
 
 from TeamUpNow_29_07_23.views import teamUpNowTech_login, teamUpNowTech
 
+from django.views.generic.base import RedirectView
+
 
 urlpatterns = [
     # path('teamUpNowTech_login/', teamUpNowTech_login, name="teamUpNowTech_login"),
+
+    path('/search/<term>/', RedirectView.as_view(url='https://www.teamupnow.tech/?q=%(term)s')),
 
     path('teamUpNowTech/', teamUpNowTech, name="teamUpNowTech"),
 
