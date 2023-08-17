@@ -23,6 +23,7 @@ from authy.views import UserProfile, profilefavorites, follow
 from TeamUpNow_29_07_23.views import teamUpNowTech_login, teamUpNowTech, teamupnow_redirect
 
 from django.views.generic.base import RedirectView
+from django.conf.urls import url
 
 
 urlpatterns = [
