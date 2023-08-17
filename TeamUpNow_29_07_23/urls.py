@@ -33,7 +33,7 @@ urlpatterns = [
     # path('', RedirectView.as_view(url='https://www.teamupnow.tech/?q=%(term)s')),
 
     path(
-        "go-to-django/",
+        " ",
         RedirectView.as_view(url="teamupnow.tech/"),
         name="go-to-django",
     ),
