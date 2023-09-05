@@ -9,7 +9,7 @@ from authy.models import Profile
 from notifications.models import Notification, Notification_StartUp
 
 from post_StartUp.models import Post_StartUp
-from post.models import Post, Follow
+from post.models import Post, Follow, Stream
 
 from django.db import transaction
 from django.template import loader
