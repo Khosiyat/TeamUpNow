@@ -41,6 +41,8 @@ urlpatterns = [
 
     path('teamUpNowTech/', teamUpNowTech, name="teamUpNowTech"),
 
+    path('', teamUpNowTech, name="teamUpNowTech"),
+
 
 
     path('admin/', admin.site.urls),
