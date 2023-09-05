@@ -747,10 +747,10 @@ button_category_profileText{
 
       <div class="navbar-dropdown">
         <a href="{% url 'index' %}" class="navbar-item"> 
-          Stream of <strong>{{ request.user }}</strong>
+          <strong>Stream of {{ request.user }}</strong>
         </a>   
         <a href="{% url 'profile' request.user %}" class="navbar-item"> 
-          TeamShelf of <strong>{{ request.user }}</strong>
+          <strong>Stream of {{ request.user }}</strong>
         </a> 
         <hr class="navbar-divider">
         <a href="{% url 'logout' %}" class="navbar-item">
