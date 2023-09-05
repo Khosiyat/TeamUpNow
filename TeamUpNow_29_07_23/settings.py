@@ -107,7 +107,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
-        'NAME': "/home/user/src/TeamUpNow_29_07_23/database/db.sqlite3"
+        'NAME': "/home/user/src/TeamUpNow/database/db.sqlite3"
     }
 }
 
