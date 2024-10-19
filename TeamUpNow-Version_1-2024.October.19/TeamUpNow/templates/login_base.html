@@ -1,0 +1,127 @@
+
+{% load static %}
+{% load humanize %}
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+        <title>TeamUpNow</title>
+        <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
+    </head>
+  <body>
+           
+    <div class="split left_bar_notifications_base"> 
+      
+      <section class="section">
+        <div class="container">
+              <div class="card_login">
+                <div class="card-content">
+                  <form method="post" action="" role="form">
+                    {% csrf_token %}
+                    <center>
+                    <h3 class="title_login_signUp">Login</h3>
+      
+                    <!-- Username Field -->
+                    <div class="field">
+                      <label class="text_login_signUp">Username</label>
+                      <div class="control has-icons-left">
+                        <input class="input is-medium" type="text" name="username" placeholder="Enter your username" required>
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-user"></i>
+                        </span>
+                      </div>
+                    </div>
+      
+                    <!-- Password Field -->
+                    <div class="field">
+                      <label class="text_login_signUp">Password</label>
+                      <div class="control has-icons-left">
+                        <input class="input is-medium" type="password" name="password" placeholder="Enter your password" required>
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-lock"></i>
+                        </span>
+                      </div>
+                    </div>
+      
+                    <!-- Display Error Messages -->
+                    {% if messages %}
+                    <div class="notification is-danger">
+                      {% for message in messages %}
+                        <p>{{ message }}</p>
+                      {% endfor %}
+                    </div>
+                    {% endif %}
+      
+                    <!-- Submit Button -->
+                    <div class="field">
+                      <p class="control">
+                        <button type="submit" class="login-button">
+                          Login
+                      </button>                      
+                      </p>
+                    </div>
+      
+                    <!-- Hidden next field -->
+                    <input type="hidden" name="next" value="{{ next }}">
+      
+                    <!-- Signup Link -->
+                    <div class="field">
+                      <p class="control">
+                        <a href="{% url 'signup' %}" class="createAccount-button">Create an account</a>
+                      </p>
+                    </div>
+                    </center>
+                  </form>
+                </div>
+              </div>
+        </div>
+      </section>
+
+  </body>
+</html>
+
+    </div>
+    
+      {% block banner %}
+      {% endblock %}
+
+  <section class="section">
+    <div class="container">
+
+      {% block content %}
+      {% endblock %}
+
+
+      {% block pagination %}
+      {% endblock %}
+
+    </div>
+  </section>
+
+  </body>
+ 
+
+  
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'js/init.js' %}"></script>
+  <script src="{% static 'js/slider.js' %}"></script>
+</html>
+
+
+
+
+
+
+
+
+

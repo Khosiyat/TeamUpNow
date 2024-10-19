@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+
+        <div class="hero-body">
+        <div class="container">
+          <h1 style="font-size: 30px" class="title">
+           <center><title_header_PostDetails>#{{ tag.title }}</title_header_PostDetails></center> 
+          </h1>
+        </div>
+      </div> 
+      
+      <div class="columns is-mobile has-text-centered">
+        <div class="column is-offset-one-quarter">
+      {% for post in posts %}   
+
+      <div class="box" style="width: 50%;">
+        <figure class="image is-256x256">
+          <div class="media">
+      
+            <!-- Add a flex container for the 3 components -->
+            <div class="flex-container" style="display: flex; align-items:center; gap: 30px;">
+            
+              <!-- Component 1: Profile Picture -->
+              <div class="media-left">
+                <figure class="image is-48x48">
+                  <a href="{% url 'profile' post.user %}"> 
+                    {% if post.user.profile.picture %}
+                      <p class="image is-64x64">
+                        <img class="box_badge_picture" src="{{ post.user.profile.picture.url }}">
+                      </p>
+                    {% else %}
+                      <img class="box_badge_picture" src="{% static 'img/TeamUpNow_logo_Whiteackground - Copy.png' %}" alt="Placeholder image">
+                    {% endif %}
+                  </a>
+                </figure>
+              </div>
+      
+              <!-- Component 2: Profile Name -->
+              <div class="profile-name">
+                {% if post.user.profile.first_name %}
+                  <a href="{% url 'profile' post.user %}"> 
+                    <title_header_PostDetails>{{ post.user.profile.first_name }} {{ post.user.profile.last_name }}</title_header_PostDetails>
+                  </a>
+                {% else %}
+                  <a href="{% url 'profile' post.user %}"> 
+                    <title_header_PostDetails>{{ post.user.profile.user }}</title_header_PostDetails>
+                  </a>
+                {% endif %}
+              </div>
+      
+              <!-- Component 3: Post Content -->
+              <div class="media-left">
+                <p>
+                  <small>{{ post.posted }}</small>
+                  <small style="opacity: 50%;">
+                    <a href="{% url 'post_details' post.id %}"> Engage Now</a>
+                  </small>
+                </p>
+                <div>About {{ post.title_post }}</div>
+                <p><a href='{{ post.url_sourceContent }}'>See Source Of The tutorial</a></p>
+              </div>
+      
+            </div> <!-- End of flex-container -->
+      
+          </div>
+        </figure>
+      </div> 
+      
+      {% endfor %}
+      
+    </div> 
+  </div> 
+      
+{% endblock %}

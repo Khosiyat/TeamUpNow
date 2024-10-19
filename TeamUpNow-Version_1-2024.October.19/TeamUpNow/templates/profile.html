@@ -1,0 +1,323 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="split top">
+  <article class="media">
+    <table style="width: 100%;">
+      <tr>
+        <!-- First Column (Profile Picture and Actions) -->
+        <th style="width: 20%;">
+          <div class="media-left">
+            <figure class="image is-128x128">
+              {% if user.is_authenticated and user == profile.user %}
+                <a href="{% url 'edit-profile' %}">
+                  {% if profile.picture %}
+                    <p class="image is-128x128"><img class="box_badge_picture" src="{{ profile.picture.url }}"></p>
+                  {% else %}
+                    <img class="box_profile_picture" src="{% static 'img/TeamUpNow_logo_GreenBackground.png' %}" width="128" height="128">
+                  {% endif %}
+                </a>
+              {% else %}
+                {% if profile.picture %}
+                  <p class="image is-128x128"><img class="box_badge_picture" src="{{ profile.picture.url }}"></p>
+                {% else %}
+                  <img class="box_profile_picture" src="{% static 'img/TeamUpNow_logo_GreenBackground.png' %}" width="128" height="128">
+                {% endif %}
+              {% endif %}
+            </figure>
+
+            {% if user.is_authenticated and user != profile.user %}
+              <div class="media-right">
+                {% if follow_status == True %}
+                  <a class="title_header_BreakUpUnFollow" href="{% url 'follow' profile.user 0 %}">BreakUp</a>
+                {% else %}
+                  <a class="title_header_TeamUpFollow" href="{% url 'follow' profile.user 1 %}">TeamUp</a>
+                {% endif %}
+              </div>
+            {% else %}
+              <div class="media-right">
+                <a class="title_header_Edit" href="{% url 'edit-profile' %}">Edit</a>
+              </div>
+            {% endif %}
+          </div>
+        </th>
+
+        <!-- Second Column (Profile Details) -->
+        <th style="width: 20%;">
+          <br>
+          <title_header_profile_mainDetails>{% if profile.first_name %}{{ profile.first_name }} {{ profile.last_name }} {% else %}  @{{ profile.user }}{% endif %}</title_header_profile_mainDetails>
+          <br>
+
+          {% if profile.url_linkedInn %}
+            <a href="{{ profile.url_linkedInn }}" aria-label="LinkedIn Profile" target="_blank" class="profile-link">
+              <title_header_profile_contactDetails>LinkedIn </title_header_profile_contactDetails>
+            </a>
+          {% endif %}
+
+          {% if profile.url_github %}
+            <a href="{{ profile.url_github }}" aria-label="GitHub Profile" target="_blank" class="profile-link">
+              <title_header_profile_contactDetails>| GitHub</title_header_profile_contactDetails>
+            </a>
+          {% endif %}
+          <br>
+          <title_header_profile_links>Joined: </title_header_profile_links><title_header_profile_secondaryDetails> {{ profile.created }}</title_header_profile_secondaryDetails>
+          <br>
+          <title_header_profile_links>Location: </title_header_profile_links><title_header_profile_secondaryDetails> {{ profile.location }}</title_header_profile_secondaryDetails>
+
+          <br>
+
+          {% if profile.profile_info %}
+            <title_header_profile_links>My contents are:</title_header_profile_links>
+            <br>
+            <title_header_profile_secondaryDetails>{{ profile.profile_info }}</title_header_profile_secondaryDetails>
+          {% endif %}
+        </th>
+
+        <!-- Third Column (Charts) -->
+        <th style="width: 60%;">
+          <table style="width: 100%; text-align: center;">
+            <tr>
+              <td style="width: 33%;">
+                <canvas id="followersPieChart" width="128" height="128"></canvas>
+              </td>
+              <td style="width: 33%;">
+                <canvas id="favoritesPieChart" width="128" height="128"></canvas>
+              </td>
+            </tr>
+          </table>
+        </th>
+      </tr>
+    </table>
+  </article>
+
+  <div class="split bottom">
+    <section class="section">
+      <div class="container">
+        <div class="tabs is-centered">
+          <table style="width: 100%;">
+            <th style="width: 50%;">
+              <li class="{% if url_name == 'profile' %}is-active{% endif %}">
+                <a class="button_category_profile" href="{% url 'profile' profile.user %}">
+                  <span class="button_category_profileText">Teaching - {{ psts_count }}</span>
+                </a>
+              </li>
+            </th>
+            <th style="width: 50%;">
+              <li class="{% if url_name == 'profilefavorites' %}is-active{% endif %}">
+                <a class="button_category_profile" href="{% url 'profilefavorites' profile.user %}">
+                  <span class="button_category_profileText">Learning - {{ fav_count }}</span>
+                </a>
+              </li>
+            </th>
+          </table>
+        </div>
+
+        <div class="columns is-mobile is-multiline is-centered">
+          <table class="table table-striped table-hover table-bordered" style="width: 100%;">
+            <th> <title_header>Title</title_header> </th>
+            <th> <title_header>Date</title_header> </th>
+            <th> <title_header>Tag Category</title_header> </th>
+            <th> <title_header>Liked</title_header> </th>
+            <th> <title_header>Interested</title_header> </th>
+            <th>  </th>
+
+            {% for post in posts %}
+              <center>
+                {% if user.is_authenticated and user == profile.user %}
+                  <tr>
+                    <td>
+                      <a href="{{ post.get_absolute_url }}"> <title_header> {{ post.caption|truncatechars:40}}  </title_header> </a>
+                    </td>
+                    <td>
+                      <a href="{{ post.get_absolute_url }}"> <title_header> {{ post.posted|truncatechars:17}}  </title_header> </a>
+                    </td>
+                    <td>
+                      <!-- <a href="{{ post.get_absolute_url }}"> <title_header> {% for tag in post.tags.all %}<a href="{{ tag.get_absolute_url }}">#{{ tag|truncatechars:15 }}</a>{% endfor %}  </title_header> </a> -->
+                      <td>
+                        <a href="{{ post.get_absolute_url }}">
+                            <title_header>
+                                {% for tag in post.tags.all %}
+                                    {% if tag.slug %}  {# Check if slug exists #}
+                                        <a href="{{ tag.get_absolute_url }}">#{{ tag.title|truncatechars:15 }}</a>
+                                    {% else %}
+                                        <span>#{{ tag.title|truncatechars:15 }}</span> {# Handle tags without slugs gracefully #}
+                                    {% endif %}
+                                {% endfor %}
+                            </title_header>
+                        </a>
+                    </td>
+                    
+                    </td>
+                    <td>
+                      <a href="{{ post.get_absolute_url }}"> <title_header> {{ post.liked}}  </title_header> </a>
+                    </td>
+                    <td>
+                      <a href="{{ post.get_absolute_url }}"> <title_header> {{ post.interested}}  </title_header> </a>
+                    </td>
+                    <td>
+                      <a href="{% url 'edit_post' post.id %}"> <title_header> edit  </title_header> </a>
+                    </td>
+                  </tr>
+                {% else %}
+                  <tr>
+                    <td>
+                      <a href="{{ post.get_absolute_url }}"> <title_header> {{ post.caption}}  </title_header> </a>
+                    </td>
+                    <td>
+                      <a href="{{ post.get_absolute_url }}"> <title_header> {{ post.posted}}  </title_header> </a>
+                    </td>
+                    <td>
+                      <a href="{{ post.get_absolute_url }}"> <title_header> {% for tag in post.tags.all %}<a href="{{ tag.get_absolute_url }}">#{{ tag }}</a>{% endfor %}  </title_header> </a>
+                    </td>
+                    <td>
+                      <a href="{{ post.get_absolute_url }}"> <title_header> {{ post.liked}}  </title_header> </a>
+                    </td>
+                    <td>
+                      <a href="{{ post.get_absolute_url }}"> <title_header> {{ post.interested}}  </title_header> </a>
+                    </td>
+                  </tr>
+                {% endif %}
+              </center>
+
+            {% empty %}
+
+              {% if user.is_authenticated and user == profile.user %}
+                <tr>
+                  <td>
+                    <a href="{% url 'add_post' %}"> <title_header> You havn't mentored yet </title_header></a>
+                  </td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td>
+                    <a href="#"> <title_header> {{ profile.user }}'s not mentored yet   </title_header> </a>
+                  </td>
+                  <td>
+                    <a href="#"> <title_header> Check out later  </title_header> </a>
+                  </td>
+                </tr>
+              {% endif %}
+
+            {% endfor %}
+
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="{% static 'js/scripts.js' %}"></script>
+
+  
+  <script>
+    // Helper function to determine if all values are zero
+    function areAllValuesZero(values) {
+      return values.every(value => value === 0);
+    }
+
+          // New variables for posts count and favorites count
+          var postsCount = {{ posts_count }};  // Assuming posts_count is a variable in your context
+          var favoritesCount = {{ posts_favorites_count }};  // Assuming posts_favorites_count is a variable in your context
+        
+          // Initialize the second pie chart for posts count and favorites count
+          var ctx2 = document.getElementById('favoritesPieChart').getContext('2d');
+          var postFavoriteData = [postsCount, favoritesCount];
+          
+          var favoritesPieChart = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+              labels: [`Teaching: ${postsCount}`, `Learning: ${favoritesCount}`],  // Labels for the new chart
+              datasets: [{
+                data: postFavoriteData,  // Data for the new chart
+                backgroundColor: areAllValuesZero(postFavoriteData) ? [
+                  'transparent',  // Transparent if zero
+                  'transparent'
+                ] : [
+                  '#B58FAE',  
+                  '#FFFFFF'  
+                ],
+                borderColor: [
+                  '#B58FAE',  
+                  '#B58FAE'  
+                ],  
+                borderWidth: 1,
+                hoverOffset: 4
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,  // Allows resizing based on the canvas size
+              cutout: '95%',  // Makes the doughnut chart "thin"
+              plugins: {
+                legend: {
+                  display: true,  // Show legend with labels
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function(tooltipItem) {
+                      return tooltipItem.label;  // Show the custom labels in tooltips
+                    }
+                  }
+                }
+              }
+            }
+          });
+
+
+
+    // New variables for following count and followers count
+    var followingCount = {{ following_count }};  // Assuming following_count is a variable in your context
+    var followersCount = {{ followers_count }};  // Assuming followers_count is a variable in your context
+
+    // Initialize the third pie chart for following count and followers count
+    var ctx3 = document.getElementById('followersPieChart').getContext('2d');
+    var followingFollowersData = [followingCount, followersCount];
+
+    var followersPieChart = new Chart(ctx3, {
+      type: 'doughnut',
+      data: {
+        labels: [`Mentees: ${followersCount}`, `Mentors: ${followingCount}`],  // Labels for the new chart
+        datasets: [{
+          data: followingFollowersData,  // Data for the new chart
+          backgroundColor: areAllValuesZero(followingFollowersData) ? [
+            'transparent',  // Transparent if zero
+            'transparent'
+          ] : [
+                  '#B58FAE',  
+                  '#FFFFFF'  
+                ],
+                borderColor: [
+                  '#B58FAE',  
+                  '#B58FAE'  
+                ],  
+          borderWidth: 1,
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,  // Allows resizing based on the canvas size
+        cutout: '95%',  // Makes the doughnut chart "thin"
+        plugins: {
+          legend: {
+            display: true,  // Show legend with labels
+          },
+          tooltip: {
+            callbacks: {
+              label: function(tooltipItem) {
+                return tooltipItem.label;  // Show the custom labels in tooltips
+              }
+            }
+          }
+        }
+      }
+    });
+
+</script>
+</div>
+
+{% endblock %}
+

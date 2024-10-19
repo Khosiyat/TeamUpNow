@@ -1,0 +1,246 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>TeamUpNow</title>
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="split left_bar_notifications_base">
+        <!-- StartUp NOTIFICATIONS -->
+        {% for notification in notifications %}
+            {% if notification.notification_type == 2 %}
+                <div class="notification-box">
+                    <a href="{% url 'delete-notification' notification.id %}" class="delete"></a>
+                    <article class="media">
+                        <a href="{% url 'profile' notification.sender %}"> 
+                            <figure class="media-left">
+                                <p class="image is-64x64">
+                                    {% if notification.sender.profile.picture %}
+                                        <img class="box_badge_picture" src="{{ notification.sender.profile.picture.url }}">
+                                    {% else %}
+                                        <img class="box_badge_picture" src="{% static 'img/TeamUpNow_logo_GreenBackground.png' %}" alt="Placeholder image">
+                                    {% endif %}
+                                </p>
+                            </figure>
+                        </a>
+                        <div class="media-content">
+                            <div class="content">
+                                <strong>
+                                    <title_header_Notification_name>
+                                        {% if notification.sender.profile.first_name and notification.sender.profile.last_name %}
+                                            {{ notification.sender.profile.first_name }} {{ notification.sender.profile.last_name }}
+                                        {% else %}
+                                            {{ notification.sender.profile.user }}
+                                        {% endif %}
+                                    </title_header_Notification_name>
+                                </strong>
+                                <br> 
+                                <a href="{% url 'post_details' notification.post.id %}">
+                                    <title_header_Notification>Asked question from you</title_header_Notification>
+                                </a>
+                                <br>
+                                <strong>
+                                    <small>
+                                        <title_header_Notification_date>{{ notification.date|naturaltime }}</title_header_Notification_date>
+                                    </small>
+                                </strong>
+                            </div>
+                        </div> 
+                    </article>
+                </div> 
+            {% endif %}
+            
+            {% if notification.notification_type == 3 %}
+                <div class="notification-box">
+                    <a href="{% url 'delete-notification' notification.id %}" class="delete"></a>
+                    <article class="media">
+                        <figure class="media-left">
+                            <a href="{% url 'profile' notification.sender %}"> 
+                                <p class="image is-64x64">
+                                    {% if notification.sender.profile.picture %}
+                                        <img class="box_badge_picture" src="{{ notification.sender.profile.picture.url }}">
+                                    {% else %}
+                                        <img class="box_badge_picture" src="{% static 'img/TeamUpNow_logo_GreenBackground.png' %}" alt="Placeholder image">
+                                    {% endif %}
+                                </p>
+                            </a>
+                        </figure>
+                        <div class="media-content">
+                            <div class="content">
+                                <strong>
+                                    <title_header_Notification_name>
+                                        {% if notification.sender.profile.first_name and notification.sender.profile.last_name %}
+                                            {{ notification.sender.profile.first_name }} {{ notification.sender.profile.last_name }}
+                                        {% else %}
+                                            {{ notification.sender.profile.user }}
+                                        {% endif %}
+                                    </title_header_Notification_name>
+                                </strong>
+                                <br> 
+                                <a href="{% url 'profile' notification.sender %}">
+                                    <title_header_Notification>Chose you as a mentor</title_header_Notification>
+                                </a>
+                                <br>
+                                <strong>
+                                    <small>
+                                        <title_header_Notification_date>{{ notification.date|naturaltime }}</title_header_Notification_date>
+                                    </small>
+                                </strong>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            {% endif %}
+            
+            {% if notification.notification_type == 1 %}
+                <div class="notification-box">
+                    <a href="{% url 'delete-notification' notification.id %}" class="delete"></a>
+                    <article class="media">
+                        <figure class="media-left">
+                            <a href="{% url 'profile' notification.sender %}"> 
+                                <p class="image is-64x64">
+                                    {% if notification.sender.profile.picture %}
+                                        <img class="box_badge_picture" src="{{ notification.sender.profile.picture.url }}">
+                                    {% else %}
+                                        <img class="box_badge_picture" src="{% static 'img/TeamUpNow_logo_GreenBackground.png' %}" alt="Placeholder image">
+                                    {% endif %}
+                                </p>
+                            </a>
+                        </figure>
+                        <div class="media-content">
+                            <div class="content">
+                                <strong>
+                                    <title_header_Notification_name>
+                                        {% if notification.sender.profile.first_name and notification.sender.profile.last_name %}
+                                            {{ notification.sender.profile.first_name }} {{ notification.sender.profile.last_name }}
+                                        {% else %}
+                                            {{ notification.sender.profile.user }}
+                                        {% endif %}
+                                    </title_header_Notification_name>
+                                </strong>
+                                <br> 
+                                <a href="{% url 'post_details' notification.post.id %}">
+                                    <title_header_Notification>Upvoted your tutorial</title_header_Notification>
+                                </a>
+                                <br>
+                                <strong>
+                                    <small>
+                                        <title_header_Notification_date>{{ notification.date|naturaltime }}</title_header_Notification_date>
+                                    </small>
+                                </strong>
+                            </div>
+                        </div> 
+                    </article>
+                </div>
+            {% endif %}
+        {% empty %}
+            {% for notification in notifications %}
+                {% if notification.notification_type == 2 %}
+                    <div class="box">
+                        <a href="{% url 'delete-notification' notification.id %}" class="delete"></a>
+                        <article class="media">
+                            <a href="{% url 'profile' notification.sender %}"> 
+                                <figure class="media-left">
+                                    <p class="image is-64x64">
+                                        {% if notification.sender.profile.picture %}
+                                            <img class="box_badge_picture" src="{{ notification.sender.profile.picture.url }}">
+                                        {% else %}
+                                            <img class="box_badge_picture" src="{% static 'img/TeamUpNow_logo_GreenBackground.png' %}" alt="Placeholder image">
+                                        {% endif %}
+                                    </p>
+                                </figure>
+                            </a>
+                            <div class="media-content">
+                                <div class="content">
+                                    <strong>{{ notification.sender.profile.first_name }} {{ notification.sender.profile.last_name }}</strong>
+                                    <br> 
+                                    specialist in 
+                                    <a href="{% url 'profile' notification.sender %}">{{ notification.sender.profile.interstCategory }}</a>
+                                    <br>
+                                    engaged in 
+                                    <a href="{% url 'post_details' notification.post.id %}">{{ notification.post.classCategory }}</a>
+                                    <br>
+                                    <strong>
+                                        <small>
+                                            <title_header_Notification_date>{{ notification.date|naturaltime }}</title_header_Notification_date>
+                                        </small>
+                                    </strong>
+                                </div>
+                            </div> 
+                        </article>
+                    </div> 
+                {% endif %}
+            {% empty %}
+                <img class="emptyNotification_picture" src="{% static 'img/TeamUpNow_logo_Whiteackground - Copy.png' %}" alt="Placeholder image">
+                <a href="{% url 'profile' request.user %}" class="navbar-item">
+                    <button type="submit" class="createAccountPage-button">
+                        Build Your Profile
+                    </button>
+                </a>
+            {% endfor %}
+        {% endfor %}
+    </div>
+    
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-item" href="{% url 'stream' %}">
+                    <img src="{% static 'img/TeamUpNow_logo_GreenBackground.png' %}" width="32" height="32">
+                </a>
+                <div class="navbar-dropdown">
+                    <a href="{% url 'stream' %}" class="navbar-item"> 
+                        <strong>Stream</strong>
+                    </a>   
+                    <a href="{% url 'profile' request.user %}" class="navbar-item"> 
+                        <strong>{{ request.user }}</strong>
+                    </a> 
+                    <hr class="navbar-divider">
+                    <a href="{% url 'change_password' %}" class="navbar-item">
+                        change_password
+                    </a>
+                    <hr class="navbar-divider">
+                    <a href="{% url 'logout' %}" class="navbar-item">
+                        Log out
+                    </a>
+                </div>
+            </div>
+        </div>
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-item" href="{% url 'add_post' %}">
+                <h1 style="color: #844578;">Create++</h1>
+            </a>
+        </div>
+    </nav>
+
+    {% block banner %}
+    {% endblock %}
+
+    <section class="section">
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+            {% block pagination %}
+            {% endblock %}
+        </div>
+    </section>
+</body>
+
+<script src="{% static 'js/scripts.js' %}"></script>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="{% static 'js/init.js' %}"></script>
+<script src="{% static 'js/slider.js' %}"></script>
+</html>

@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="split left"> 
+
+    <box_header_stream>
+        <title_header_stream>
+            <a href="{% url 'add_post' %}">Frequent Tags </a>
+        </title_header_stream>
+    </box_header_stream>
+
+    <box_tages_stream>
+        <div class="columns">
+            {% for tag in top_tags %}
+                {% if tag.slug %}
+                    <a href="{{ tag.get_absolute_url }}">
+                        <title_headerPrimary_link>
+                            {{ tag.title }} 
+                            <br>
+                            {{ tag.num_posts }} times
+                        </title_headerPrimary_link>
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </box_tages_stream>    
+
+    <box_header_stream>
+        <title_header_stream>
+            <a href="{% url 'add_post' %}">Your Peers Contributions </a>
+        </title_header_stream>
+    </box_header_stream>
+    <br>
+
+    <box_badges_stream>
+        <div class="columns">
+            {% for post_item in post_items %}
+                <div style="padding-right: 26px;">
+                    <div class="box_stream_mentors">
+                        <a href="{% url 'post_details' post_item.id %}">
+                            {% if post_item.content.first.file.name|slice:"-2:" == 'png' or post_item.content.first.file.name|slice:"-2:" == 'jpg' %}
+                                <figure>
+                                    <h1><strong>Languages (create new fields)</strong></h1>
+                                    <br>
+                                    <div class="columns">
+                                        {% for post_item in post_items %}
+                                            <div style="padding-right: 1px;">
+                                                <a href="{% url 'profile' post_item.user %}">  
+                                                    <small style="opacity: 50%;">{{ post_item.posted | naturaltime }}</small>
+                                                </a>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </figure>
+                            {% else %}
+
+                                {% if post_item.user.profile.picture %}
+                                    <p class="image is-128x128">
+                                        <img class="box_mentorsProfileIndex_picture" src="{{ post_item.user.profile.picture.url }}">
+                                    </p>
+                                {% else %}
+                                    <p class="image is-128x128">
+                                        <img class="box_mentorsProfileIndex_picture" src="{% static 'img/TeamUpNow_logo_Whiteackground - Copy.png' %}" width="32" height="32">
+                                    </p>
+                                {% endif %} 
+                            {% endif %}
+
+                            <div class="media-content">
+                                {% if post_item.user.profile.first_name %}
+                                    <a href="{% url 'profile' post_item.user %}">
+                                        <title_headerPrimaryName_link>{{ post_item.user.profile.first_name }} {{ post_item.user.profile.last_name }}</title_headerPrimaryName_link>
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'profile' post_item.user %}">
+                                        <title_headerPrimaryName_link>@{{ post_item.user.username }}</title_headerPrimaryName_link>
+                                    </a>
+                                {% endif %}
+                                <p><small style="opacity: 50%;">{{ post_item.posted | naturaltime }}</small></p>
+                                <p><a href='{{ post_item.get_absolute_url }}'><title_headerPrimaryCategory_link>{{ post_item.classCategory }}</title_headerPrimaryCategory_link></a></p> 
+            
+                                <!-- Tags Loop -->
+                                {% for tag in post_item.tags.all %}
+                                    {% if tag.slug %}
+                                        <a href="{{ tag.get_absolute_url }}">
+                                            <title_headerPrimary_postIndex_link>#{{ tag }}</title_headerPrimary_postIndex_link>
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+            {% endfor %}
+        </div> 
+    </box_badges_stream>
+
+</div> 
+{% endblock %}

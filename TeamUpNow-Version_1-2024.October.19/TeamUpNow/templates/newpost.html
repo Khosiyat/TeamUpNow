@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="columns is-mobile has-text-centered">
+  <div class="column is-half is-offset-one-quarter">
+    <div class="card custom-card">
+      <div class="card-content">
+          <form method="post" action="" enctype="multipart/form-data" role="form">
+              {% csrf_token %}
+              <center><p><h3 style="opacity: 30%; color: #844578;" class="title is-5">Add your Content</h3></p></center> 
+  
+              <div class="field">
+                  <p class="control has-icons-left">
+                      <center><p><h3 style="opacity: 50%;" class="title is-6">Title of your content</h3></p></center> 
+                      {{ form.title_post }}
+                      <span class="icon is-small is-left">
+                          <i class="fas fa-lock"></i>
+                      </span>
+                  </p>
+              </div>
+  
+              <div class="field">
+                  <p class="control has-icons-left">
+                      <center><p><h3 style="opacity: 50%;" class="title is-6">Add the url of your content source</h3></p></center> 
+                      <strong><center><p><h3 style="opacity: 70%; color: #844578;" class="title is-6">(ex url; Github, YouTube, LeetCode, Kaggle, Google Colab, Medium, Quora, etc).</h3></p></center></strong>
+                      {{ form.url_sourceContent }}
+                      <span class="icon is-small is-left">
+                          <i class="fas fa-lock"></i>
+                      </span>
+                  </p>
+              </div>
+  
+              <div class="field">
+                  <p class="control has-icons-left">
+                      <center><p><h3 style="opacity: 50%;" class="title is-6">Describe in five words what your mentees expect from your content </h3></p></center> 
+                      <strong><center><p><h3 style="opacity: 70%; color: #844578;" class="title is-6">(ex; Greedy-Pattern, Systematic, Pattern-driven, Constraint-aware, Optimized).</h3></p></center></strong>
+                      {{ form.caption }}
+                      <span class="icon is-small is-left">
+                          <i class="fas fa-lock"></i>
+                      </span>
+                  </p>
+              </div>
+  
+              <div class="field">
+                  <p class="control has-icons-left">
+                      <center><p><h3 style="opacity: 50%;" class="title is-6">Tags (add tags, separated by commas)</h3></p></center> 
+                      <strong><center><p><h3 style="opacity: 70%; color: #844578;" class="title is-6">(ex Tags; Algorithm, Data Structures, ML Model, System Design, LeetCode, Kaggle).</h3></p></center></strong>
+                      {{ form.tags }}
+                      <span class="icon is-small is-left">
+                          <i class="fas fa-lock"></i>
+                      </span>
+                  </p>
+              </div>
+  
+              <div class="field">
+                  <p class="control">
+                      <button type="submit" class="createAccountPage-button">
+                          Add 
+                      </button>
+                  </p>
+              </div>
+          </form>
+      </div>
+  </div>
+  
+      </div>
+</div>
+
+
+
+
+
+
+
+{% endblock %}

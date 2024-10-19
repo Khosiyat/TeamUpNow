@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+        
+{% block content %}
+
+<div class="columns is-mobile">
+    <div class="column is-half is-offset-one-quarter">
+        <div class="card custom-card">
+            <div class="card-content">
+                <center>
+                    <form method="post" enctype="multipart/form-data" action="" role="form">
+                        {% csrf_token %}
+                        <center>
+                            <p>
+                                <h3 style="opacity: 30%; color: #844578;" class="title is-5">Edit Profile</h3>
+                            </p>
+                        </center> 
+
+                        <div class="field">
+                            <div class="file is-boxed is-centered is-primary">
+                                <label class="label title is-6" style="opacity: 1; font-weight: bold; color: #4A4A4A;">Your Picture : </label> {{ form.picture }}
+                            </div>
+                        </div>
+      
+                        <div class="field">
+                            <p>
+                                <h3 style="opacity: 50%;" class="title is-6">First name</h3>
+                            </p>
+                            <div class="control">
+                                {{ form.first_name }}
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <p>
+                                <h3 style="opacity: 50%;" class="title is-6">Last name</h3>
+                            </p>
+                            <div class="control">
+                                {{ form.last_name }}
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <p>
+                                <h3 style="opacity: 50%;" class="title is-6">Location</h3>
+                            </p>
+                            <div class="control">
+                                {{ form.location }}
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <p>
+                                <h3 style="opacity: 50%;" class="title is-6">LinkedIn</h3>
+                            </p>
+                            <div class="control">
+                                {{ form.url_linkedInn }}
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <p>
+                                <h3 style="opacity: 50%;" class="title is-6">GitHUb</h3>
+                            </p>
+                            <div class="control">
+                                {{ form.url_github }}
+                            </div>
+                        </div>
+                        
+                        <div class="field">
+                            <p>
+                                <h3 style="opacity: 50%;" class="title is-6">What are your contents about. Please, write maximum 3 words</h3>
+                            </p>
+                            <div class="control">
+                                {{ form.profile_info }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <span style="color: red; font-weight: bold;">{{ form.errors }}</span>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <p class="control">
+                                <button type="submit" class="createAccountPage-button">
+                                    Update Profile
+                                </button>
+                            </p>
+                        </div>
+
+                    </form>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

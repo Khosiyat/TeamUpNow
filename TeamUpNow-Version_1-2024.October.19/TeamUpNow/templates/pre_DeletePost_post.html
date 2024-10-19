@@ -1,0 +1,12 @@
+{% if user.is_authenticated and user == post.user %}
+    <div style="padding-top: 12%;">
+        <center>
+            Do you want to delete this class?
+            <p>
+                <a href="{% url 'delete_post' post.id %}" class="button_notification_DoNotTeamUp button_notification_DoNotTeamUp1">
+                    <button_delete class="btn-navigate-form-step" type="button">Delete</button_delete>
+                </a>
+            </p>
+        </center>
+    </div>
+{% endif %}
