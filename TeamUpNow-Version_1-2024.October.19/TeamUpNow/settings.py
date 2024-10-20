@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-2$sl8ra0+6(5mf83l$1lc#@icvs#)=jrg_g7w6g%t8$vyk25ie
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['18.232.82.192', 'localhost']
+ALLOWED_HOSTS = ['18.232.82.192', 'localhost', 'teamupnow.tech', 'www.teamupnow.tech']
 
 
 # Application definition
