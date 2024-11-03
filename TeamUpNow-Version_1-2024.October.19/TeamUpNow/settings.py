@@ -26,7 +26,7 @@ DEBUG = True
 
 # ALLOWED_HOSTS = []
 # ALLOWED_HOSTS = ['18.232.82.192', 'localhost', 'teamupnow.tech', 'www.teamupnow.tech']
-ALLOWED_HOSTS = ['18.232.82.192', 'localhost', 'teamupnow.tech', 'www.teamupnow.tech', '52.4.59.231', '54.89.151.209']
+ALLOWED_HOSTS = ['18.232.82.192', 'localhost', 'teamupnow.tech', 'www.teamupnow.tech', '52.4.59.231', '54.209.163.38']
 
 
 
